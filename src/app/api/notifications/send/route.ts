@@ -68,7 +68,7 @@ export async function POST(request: Request) {
     if (!recipientUids.length) return NextResponse.json({ sent: false, reason: "no-recipients" });
 
     const link = isAdmin ? "/account" : "/admin";
-    const publicUrl = process.env.AFRICHIKO_PUBLIC_URL || process.env.NEXT_PUBLIC_BASE_URL || "https://africhiko.vercel.app";
+    const publicUrl = process.env.GRANDYNAMIC_PUBLIC_URL || process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
     let successCount = 0;
     let failureCount = 0;
     let alreadyRequested = 0;
@@ -90,7 +90,7 @@ export async function POST(request: Request) {
           tokens: docs.map(item => String(item.data().token)),
           notification: { title, body: message },
           data: { title, body: message, link, enquiryId: body.enquiryId },
-          webpush: { fcmOptions: { link: publicUrl + link }, notification: { icon: "/africhiko-icon.svg", badge: "/africhiko-icon.svg", tag: "africhiko-" + body.enquiryId } },
+          webpush: { fcmOptions: { link: publicUrl + link }, notification: { icon: "/grandynamic-icon.svg", badge: "/grandynamic-icon.svg", tag: "grandynamic-" + body.enquiryId } },
         });
         successCount += result.successCount;
         failureCount += result.failureCount;
