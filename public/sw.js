@@ -47,10 +47,10 @@ try {
     africhikoMessaging.onBackgroundMessage((payload) => {
       if (payload.notification) return;
       const data = payload.data || {};
-      return self.registration.showNotification(data.title || "Africhiko update", {
+      return self.registration.showNotification(data.title || "Grandynamic update", {
         body: data.body || "There is an update to your project enquiry.",
-        icon: "/africhiko-icon.svg",
-        badge: "/africhiko-icon.svg",
+        icon: "/grandynamic-icon.svg",
+        badge: "/grandynamic-icon.svg",
         tag: "africhiko-" + (data.enquiryId || "update"),
         data: { link: typeof data.link === "string" && data.link.startsWith("/") ? data.link : "/account" }
       });
@@ -59,11 +59,11 @@ try {
     console.warn("Africhiko Firebase Messaging web config is incomplete.");
   }
 } catch (error) {
-  console.warn("Africhiko background notifications could not initialize.", error);
+  console.warn("Grandynamic background notifications could not initialize.", error);
 }
 
-const CACHE_NAME = "africhiko-shell-v1";
-const APP_SHELL = ["/", "/services", "/enquiry", "/basket", "/account", "/offline", "/africhiko-icon.svg"];
+const CACHE_NAME = "grandynamic-shell-v1";
+const APP_SHELL = ["/", "/services", "/enquiry", "/basket", "/account", "/offline", "/grandynamic-icon.svg"];
 const PUBLIC_MEDIA = ["/videos/enter.mp4", "/videos/gear.mp4", "/videos/outside.mp4"];
 
 self.addEventListener("install", event => {

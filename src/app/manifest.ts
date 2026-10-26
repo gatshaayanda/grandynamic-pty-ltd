@@ -2,13 +2,13 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Africhiko",
-    short_name: "Africhiko",
-    description: "Welding and steel fabrication in Botswana. Browse services and request a project quotation.",
+    name: "Grandynamic Pty Ltd",
+    short_name: "Grandynamic Pty Ltd",
+    description: "Welding, steel fabrication and custom metalwork in Botswana. Describe your project and request a quotation.",
     start_url: "/",
     display: "standalone",
-    background_color: "#6d28d9",
-    theme_color: "#6d28d9",
+    background_color: "#d45113",
+    theme_color: "#d45113",
     orientation: "portrait-primary",
     lang: "en",
     categories: ["business", "construction"],
