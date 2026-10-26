@@ -5,11 +5,11 @@ import PwaRegister from "@/app/pwa-register";
 import "./globals.css";
 import "./pwa.css";
 
-const siteUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://grandynamic-pty-ltd.vercel.app";
+const siteUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: { default: "Grandynamic Pty Ltd | Welding & Steel Fabrication", template: "%s | Africhiko" },
+  title: { default: "Grandynamic Pty Ltd | Welding & Steel Fabrication", template: "%s | Grandynamic Pty Ltd" },
   description: "Grandynamic Pty Ltd — welding, steel fabrication and custom metalwork in Botswana. Browse services and submit a project brief for review and quotation.",
   applicationName: "Grandynamic Pty Ltd",
   keywords: ["Grandynamic Pty Ltd", "Botswana steel fabrication", "welding", "gates", "steel structures"],
