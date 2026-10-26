@@ -195,3 +195,9 @@
 
 /* Clear reassurance that a published project will be carried into the enquiry. */
 .af-work-reference-note{margin:8px 0 0;color:#625a6e;font-size:.8rem;line-height:1.5}
+
+/* Original Grandynamic SVG artwork replaces unrelated bundled demo footage. */
+.af-hero-illustration{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.98}
+.af-service-art .af-workshop-illustration,.af-home-work-media>.af-workshop-illustration{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.af-service-art .af-workshop-illustration{z-index:0}
+.af-home-work-media>.af-workshop-illustration{z-index:0}

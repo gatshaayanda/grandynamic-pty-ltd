@@ -14,7 +14,7 @@ Grandynamic Pty Ltd is a customer-first welding and steel-fabrication enquiry PW
 Do not force account creation before an enquiry. Do not describe an enquiry as a confirmed quote, order, or accepted job. If a write fails, preserve the entered details and say the enquiry was not confirmed as saved.
 
 ## Firebase and data security
-- Use a dedicated Grandynamic Firebase project; do not reuse the Grandynamic Firebase project and NEXT_PUBLIC_FIREBASE_* environment variables.
+- Use a dedicated Grandynamic Firebase project and its own NEXT_PUBLIC_FIREBASE_* environment variables. Never reuse Africhiko's Firebase project, credentials, customer data or deployment identifiers.
 - admins/{uid} is provisioned outside the public client with role owner or staff.
 - Public users may read the service catalogue, but only authorized staff may write services.
 - Enquiry creation must be authenticated (anonymous auth is allowed), validated, and bound to request.auth.uid via customerId.
@@ -63,3 +63,21 @@ Use Grandynamic naming and its own approved project configuration in app-facing 
 - Before production, replace inherited Firebase project IDs and allowlists with a dedicated Grandynamic configuration. Do not deploy until the business owner confirms the authorized Google account(s), contact details and workshop address.
 - Current implementation contains legacy business contact/auth configuration that must be reviewed before production. Never reuse Africhiko production credentials or data.
 - Keep the existing customer enquiry/account journey and admin CRUD intact; no enquiry is a confirmed quote until the workshop reviews it.
+
+
+## Account experience and contextual guidance
+- Treat customer and admin accounts as a cohesive product experience, not repeated sign-in forms. Reuse the existing Firebase Auth session and current account workflows; never introduce a second account system or duplicate enquiry data.
+- Admin session restoration: when Operations opens, inspect the existing Firebase auth session and verify it with the server-side `/api/admin/access` endpoint before granting access. A remembered Google login alone is never proof of admin authorization. Preserve the server verification and approved email/role checks.
+- Avoid forcing Google's account chooser on every sign-in unless the user explicitly asks to switch accounts. Offer a clear sign-out/switch-account path.
+- Admin sessions must expire after 24 hours. Enforce expiry on entry and while the Operations session remains open; sign out when expired. Do not weaken server-side authorization or Firestore rules to make returning sessions easier.
+- Greetings may use a verified customer's preferred first name once at an appropriate entry point. Admin greetings may use a warm, concise tone (for example, “Morning, Boss”) if it fits the brand. Use neutral fallbacks when a name or local time is unavailable.
+- Personalization must be truthful: enquiry counts, statuses, messages and progress must come from current authorized records. Never invent names, unread counts, job updates or activity to make the interface feel lively.
+- The contextual helper/chat widget must remain honest about being a guided helper unless a real AI service is configured. Prefer short, dismissible, page-relevant quick actions that navigate to existing flows (start an enquiry, view the signed-in customer's own enquiries, review the authorized admin inbox, update services, or publish completed work). Actions must work; never claim an enquiry/message was sent unless persistence succeeded. Keep the protected chatbot's existing core behaviour; any future adaptation requires preserving its interaction contract and branding/copy-only changes unless explicitly authorized.
+- Weather is optional and secondary, not a decorative dashboard requirement. Add it only where it helps a real outdoor installation/site visit; use an actual forecast, named town/project location supplied by the user, and a visible update time. Do not silently track precise location or fabricate conditions. If live weather is unavailable, omit the weather card.
+- Account UX improvements must be implemented and verified as a focused change, separately from branding/media cleanup. Preserve existing guest enquiry access, guest-to-Google linking where supported, ownership boundaries, notification behaviour and the PWA installation flow.
+
+## Branding and media hygiene
+- Remove inherited Africhiko/Namane Tyres identity and bundled demo footage from Grandynamic's public-facing experience. Prefer original, locally stored SVG illustrations or properly licensed imagery over unrelated stock clips or remote hot-linked assets.
+- Keep customer landing-page and catalogue content relevant to welding, fabrication, gates, repairs and steel structures. Do not add retail checkout, payment or car-wash flows.
+- Keep the admin entry point discoverable in the footer; customer account and enquiry actions must remain understandable and accessible on mobile.
+- Never edit installation event handling, install prompt UI/lifecycle, PWA registration or service-worker caching as part of ordinary branding/media work. Only replace install branding/assets when needed and preserve the installation behaviour exactly.

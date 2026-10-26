@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-labelledby="title desc">
+<title id="title">Grandynamic steel fabrication</title><desc id="desc">Original illustration of a welder working on a steel gate frame in a workshop.</desc>
+<defs>
+ <linearGradient id="wall" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#39434a"/><stop offset="1" stop-color="#171e23"/></linearGradient>
+ <linearGradient id="steel" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#d4dbe0"/><stop offset=".5" stop-color="#77858e"/><stop offset="1" stop-color="#4b5962"/></linearGradient>
+ <linearGradient id="orange" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffd080"/><stop offset="1" stop-color="#df5a18"/></linearGradient>
+ <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M48 0H0V48" fill="none" stroke="#d5e0e6" stroke-opacity=".08" stroke-width="2"/></pattern>
+ <filter id="glow"><feGaussianBlur stdDeviation="12"/></filter>
+</defs>
+<rect width="1200" height="900" fill="url(#wall)"/><rect width="1200" height="900" fill="url(#grid)"/>
+<path d="M0 670 1200 560V900H0Z" fill="#11181d"/><path d="M0 710 1200 600" stroke="#71808a" stroke-opacity=".4" stroke-width="4"/>
+<g opacity=".5" stroke="#b7c2c9" stroke-width="8" fill="none"><path d="M100 0V650M300 0V630M500 0V610M700 0V590M900 0V570M1100 0V550"/><path d="M0 170H1200M0 340H1200M0 510H1200"/></g>
+<g transform="translate(555 185) skewY(-5)">
+ <rect x="0" y="0" width="475" height="435" fill="#202a30" stroke="#11181d" stroke-width="20"/>
+ <rect x="14" y="14" width="447" height="407" fill="none" stroke="url(#steel)" stroke-width="25"/>
+ <path d="M160 18V416M310 18V416M18 145H457M18 280H457" stroke="url(#steel)" stroke-width="19"/>
+ <path d="M28 34 443 400M443 34 28 400" stroke="#d45113" stroke-opacity=".78" stroke-width="7"/>
+ <path d="M18 145H457M160 18V416" stroke="#edf2f5" stroke-opacity=".32" stroke-width="3"/>
+</g>
+<g transform="translate(180 330)">
+ <ellipse cx="200" cy="345" rx="165" ry="35" fill="#05090b" opacity=".6"/>
+ <path d="M142 310 120 445 185 445 225 333Z" fill="#273239" stroke="#11181d" stroke-width="10"/>
+ <path d="M220 310 250 445 312 445 292 300Z" fill="#3f4c54" stroke="#11181d" stroke-width="10"/>
+ <path d="M116 432H197L207 457H105Z M245 432H320L333 457H241Z" fill="#171d21"/>
+ <path d="M125 130 220 122 270 300 122 324 75 200Z" fill="#d45113" stroke="#f6b15c" stroke-width="10"/>
+ <path d="M143 145 210 140 235 235 118 255Z" fill="#f6b15c" opacity=".3"/>
+ <path d="M106 158 60 213 118 266 151 231" fill="#3f4c54" stroke="#141a1e" stroke-width="14" stroke-linejoin="round"/>
+ <path d="M236 169 295 218 360 195" fill="none" stroke="#4b5962" stroke-width="42" stroke-linecap="round"/>
+ <path d="M350 188 407 160" stroke="#d5dce1" stroke-width="19" stroke-linecap="round"/>
+ <path d="M400 159 426 149" stroke="#11181d" stroke-width="13" stroke-linecap="round"/>
+ <path d="M104 88 154 52 201 81 195 133 145 153 105 128Z" fill="#1a2227" stroke="#d9e0e5" stroke-width="8"/>
+ <path d="M103 86 164 61 195 83 189 113 119 128Z" fill="#0d1317"/>
+ <path d="M117 91 177 73" stroke="#f4b35f" stroke-width="7"/>
+ <path d="M120 130 95 147 76 130" fill="none" stroke="#e4e9ed" stroke-width="10"/>
+</g>
+<g transform="translate(590 365)">
+ <circle cx="0" cy="0" r="68" fill="#f28a24" opacity=".18" filter="url(#glow)"/>
+ <path d="M0 0 44 -54 18 -18 72 -28 27 8 56 42 9 25 -16 68 -12 18 -57 35 -24 2 -48 -32 -9 -14Z" fill="url(#orange)"/>
+ <g stroke="#ffcb70" stroke-width="6" stroke-linecap="round"><path d="M-44 -65l-20 -22M-8 -82l-2 -30M38 -72l17 -24M79 -35l28 -8M-76 5l-31 8M48 69l18 22M-25 77l-9 28"/></g>
+</g>
+<g transform="translate(80 70)"><rect width="390" height="100" rx="8" fill="#12191e" fill-opacity=".72" stroke="#d45113" stroke-width="3"/><path d="M24 24h9v52h-9z" fill="#f4b35f"/><text x="55" y="48" font-family="Arial,sans-serif" font-size="25" font-weight="700" letter-spacing="4" fill="#f4b35f">GRANDYNAMIC</text><text x="55" y="75" font-family="Arial,sans-serif" font-size="15" letter-spacing="3" fill="#e2e8ec">WELDING · FABRICATION</text></g>
+<g transform="translate(780 740)"><path d="M0 0H330" stroke="#d45113" stroke-width="5"/><text x="0" y="40" font-family="Arial,sans-serif" font-size="19" letter-spacing="3" fill="#cbd4d9">BUILT AROUND YOUR PROJECT</text></g>
+</svg>
