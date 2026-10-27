@@ -126,7 +126,7 @@ export default function AdminGate({ children }: { children: React.ReactNode }) {
     {error && <p role="alert">{error}</p>}
     <form onSubmit={signInWithAdminPassword} style={{ display: "grid", gap: 10, marginTop: 20 }}>
       <label htmlFor="admin-password">Admin password</label>
-      <input id="admin-password" name="password" type="password" autoComplete="current-password" value={adminPassword} onChange={(event) => setAdminPassword(event.target.value)} required className="formInput" />
+      <input id="admin-password" name="password" type="password" autoComplete="current-password" value={adminPassword} onChange={(event) => setAdminPassword(event.target.value)} required style={{ width: "100%", minHeight: 46, padding: "12px 14px", border: "1px solid var(--line, #d8d8d8)", borderRadius: 10, background: "var(--surface, #fff)", color: "inherit", font: "inherit" }} />
       <button className="button buttonPrimary" type="submit" disabled={busy}>{busy ? "Signing in…" : "Admin sign in"}</button>
     </form>
     <div style={{ display: "flex", alignItems: "center", gap: 12, margin: "18px 0", fontSize: 12, opacity: 0.7 }}><span style={{ flex: 1, height: 1, background: "currentColor" }} />OR<span style={{ flex: 1, height: 1, background: "currentColor" }} /></div>
