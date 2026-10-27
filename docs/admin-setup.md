@@ -4,18 +4,17 @@ Grandynamic uses Firebase Authentication and Cloud Firestore. Customer account c
 
 ## Authorized workshop admins
 
-Only these two email addresses are allowed to administer Grandynamic:
+Only this Google account is currently allowed to bootstrap Grandynamic admin access:
 
-- `chikohoraknowledge4@gmail.com`
 - `gatshaayanda@gmail.com`
 
 1. In the Grandynamic Firebase project, open Authentication → Sign-in method and enable Google. Anonymous authentication may remain enabled for guest customer enquiries.
-2. Confirm both allowlisted Google accounts can sign in to the Grandynamic Firebase project. The email returned by Google must exactly match one of the two allowlisted addresses.
+2. Confirm the allowlisted Google account can sign in to the Grandynamic Firebase project. The email returned by Google must exactly match the allowlisted address.
 3. Configure the server-only `FIREBASE_ADMIN_KEY` environment variable with the Grandynamic Firebase service-account JSON. Never expose it through a `NEXT_PUBLIC_*` variable or commit it to Git.
 4. Visit `/admin` and choose **Continue with Google**. The server verifies the Firebase ID token and allowlisted email before provisioning an owner role; the client also checks the resulting owner/staff role.
 5. Deploy `firestore.rules` to the Grandynamic Firebase project. The rules independently require both an allowlisted authenticated email and an owner/staff role; a role document alone does not grant access.
 
-The old shared-word/anonymous promotion flow is no longer supported. Admin sign-in uses Google, not a typed password form. Do not manually add other accounts as admins; the allowlist is intentionally restricted to the two addresses above.
+The old shared-word/anonymous promotion flow is no longer supported. Admin sign-in uses Google, not a typed password form. Do not manually add other accounts as admins; the allowlist is intentionally restricted to the address above.
 
 ## Firestore access model
 
