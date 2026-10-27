@@ -33,12 +33,12 @@ export async function POST(request: Request) {
       if (isAdmin || enquiry.customerId !== decoded.uid || enquiry.status !== "New") {
         return NextResponse.json({ error: "Only the owner of a newly saved enquiry can trigger its arrival alert." }, { status: 403 });
       }
-      title = "New Africhiko enquiry";
+      title = "New Grandynamic enquiry";
       message = "A customer has submitted a project enquiry.";
       eventKey = "new-" + body.enquiryId;
     } else if (kind === "status") {
       if (!isAdmin) return NextResponse.json({ error: "Only workshop staff can send enquiry status alerts." }, { status: 403 });
-      title = "Africhiko enquiry update";
+      title = "Grandynamic enquiry update";
       message = "Your enquiry status is now: " + String(enquiry.status || "Updated") + ".";
       eventKey = "status-" + body.enquiryId + "-" + String(enquiry.status || "updated") + "-" + String(enquiry.updatedAt || "");
     } else {
@@ -50,7 +50,7 @@ export async function POST(request: Request) {
       if (savedMessage.senderUid !== decoded.uid || savedMessage.senderRole !== senderRole || (!isAdmin && enquiry.customerId !== decoded.uid)) {
         return NextResponse.json({ error: "You cannot notify participants about this message." }, { status: 403 });
       }
-      title = isAdmin ? "Message from Africhiko" : "New customer message";
+      title = isAdmin ? "Message from Grandynamic" : "New customer message";
       message = String(savedMessage.body || "").slice(0, 500);
       eventKey = "message-" + body.messageId;
     }
@@ -110,7 +110,7 @@ export async function POST(request: Request) {
     }
     return NextResponse.json({ sent: successCount > 0, successCount, failureCount, reason: successCount ? undefined : alreadyRequested ? "already-requested" : "no-registered-devices" });
   } catch (error) {
-    console.error("Africhiko push notification failed:", error);
+    console.error("Grandynamic push notification failed:", error);
     return NextResponse.json({ error: error instanceof Error ? error.message : "Could not send the notification." }, { status: 400 });
   }
 }
