@@ -37,7 +37,7 @@ export default function PwaRegister() {
     setInstallable(false);
   }
 
-  return <>{offline && <div className="offlineBanner" role="status">Offline mode · saved pages remain available. New requests may be queued on this device and sent when you reconnect.</div>}{installable && !installCardDismissed && <aside className="af-install-card" aria-label="Install Africhiko"><div className="af-install-brand"><span className="af-install-mark" aria-hidden="true">A<span>✦</span></span><span><strong>AFRICHIKO</strong><small>WELDING · FABRICATION</small></span></div><button className="af-install-close" type="button" aria-label="Dismiss install prompt" onClick={() => setInstallCardDismissed(true)}>×</button><button className="af-install-action" type="button" onClick={() => void install()}>Install Africhiko <span aria-hidden="true">↗</span></button></aside>}</>;
+  return <>{offline && <div className="offlineBanner" role="status">Offline mode · saved pages remain available. New requests may be queued on this device and sent when you reconnect.</div>}{installable && !installCardDismissed && <aside className="af-install-card" aria-label="Install Grandynamic"><div className="af-install-brand"><span className="af-install-mark" aria-hidden="true">G<span>✦</span></span><span><strong>GRANDYNAMIC</strong><small>WELDING · FABRICATION</small></span></div><button className="af-install-close" type="button" aria-label="Dismiss install prompt" onClick={() => setInstallCardDismissed(true)}>×</button><button className="af-install-action" type="button" onClick={() => void install()}>Install Grandynamic <span aria-hidden="true">↗</span></button></aside>}</>;
 }
 
 declare global {
