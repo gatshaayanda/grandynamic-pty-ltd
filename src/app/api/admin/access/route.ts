@@ -20,12 +20,12 @@ function getAdminApp() {
 export async function POST(request: Request) {
   try {
     const match = (request.headers.get("authorization") || "").match(/^Bearer\s+(.+)$/i);
-    if (!match) return NextResponse.json({ error: "Sign in with an authorized Africhiko email first." }, { status: 401 });
+    if (!match) return NextResponse.json({ error: "Sign in with an authorized Grandynamic email first." }, { status: 401 });
     const app = getAdminApp();
     const decoded = await getAuth(app).verifyIdToken(match[1]);
     const email = String(decoded.email || "").trim().toLowerCase();
     if (!ALLOWED_ADMIN_EMAILS.has(email) || decoded.firebase?.sign_in_provider === "anonymous") {
-      return NextResponse.json({ error: "This account is not authorized for Africhiko workshop operations." }, { status: 403 });
+      return NextResponse.json({ error: "This account is not authorized for Grandynamic workshop operations." }, { status: 403 });
     }
     const db = getFirestore(app);
     const adminRef = db.collection("admins").doc(decoded.uid);
