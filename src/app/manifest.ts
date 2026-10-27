@@ -13,8 +13,8 @@ export default function manifest(): MetadataRoute.Manifest {
     lang: "en",
     categories: ["business", "construction"],
     icons: [
-      { src: "/africhiko-icon.svg", sizes: "any", type: "image/svg+xml", purpose: "any" },
-      { src: "/africhiko-icon.svg", sizes: "any", type: "image/svg+xml", purpose: "maskable" }
+      { src: "/grandynamic-icon.svg", sizes: "any", type: "image/svg+xml", purpose: "any" },
+      { src: "/grandynamic-icon.svg", sizes: "any", type: "image/svg+xml", purpose: "maskable" }
     ]
   };
 }
