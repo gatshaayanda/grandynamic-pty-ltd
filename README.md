@@ -37,7 +37,7 @@ The `/admin` route is the staff surface for reviewing enquiries and managing fab
 
 - Next.js 15 / React 19 / TypeScript
 - Firebase Authentication and Cloud Firestore
-- Firebase Storage for project reference uploads and service media
+- UploadThing for project reference uploads and workshop media
 - Progressive Web App support
 - Vercel Analytics and Speed Insights
 - Vercel deployment from GitHub `main`
@@ -51,7 +51,7 @@ npm install
 npm run dev
 ```
 
-Before QA, configure the `NEXT_PUBLIC_FIREBASE_*` environment variables for the Grandynamic Pty Ltd Firebase project and verify the relevant Firestore and Storage rules. Run lint, type checks and a production build before considering the branch release-ready.
+Before QA, configure the `NEXT_PUBLIC_FIREBASE_*` environment variables for the Grandynamic Pty Ltd Firebase project and verify Firestore rules and UploadThing environment configuration. Run lint, type checks and a production build before considering the branch release-ready.
 
 Never commit `.env.local`, service-account credentials or other private secrets.
 
