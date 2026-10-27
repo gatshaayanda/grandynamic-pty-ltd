@@ -12,7 +12,7 @@ googleProvider.setCustomParameters({ prompt: "select_account" });
 async function verifyAdminAccess(user: User) {
   const email = String(user.email || "").trim().toLowerCase();
   if (!ALLOWED_ADMIN_EMAILS.includes(email)) {
-    throw new Error("This Google account is not authorized for Africhiko workshop operations.");
+    throw new Error("This Google account is not authorized for Grandynamic workshop operations.");
   }
 
   const token = await user.getIdToken();
@@ -22,12 +22,12 @@ async function verifyAdminAccess(user: User) {
   });
   const result = await response.json().catch(() => ({}));
   if (!response.ok) {
-    throw new Error(typeof result.error === "string" ? result.error : "Africhiko could not verify admin access.");
+    throw new Error(typeof result.error === "string" ? result.error : "Grandynamic could not verify admin access.");
   }
 
   const role = await getDoc(doc(db, "admins", user.uid));
   if (!role.exists() || !["owner", "staff"].includes(String(role.data().role))) {
-    throw new Error("Your account has no authorized Africhiko workshop role.");
+    throw new Error("Your account has no authorized Grandynamic workshop role.");
   }
 }
 
@@ -88,5 +88,5 @@ export default function AdminGate({ children }: { children: React.ReactNode }) {
     return <div className="adminAuthorized"><div className="adminAccountBar"><span>Signed in as {user.email ?? "authorized staff"}</span><button className="button buttonLight" type="button" onClick={() => void signOut(auth)}>Sign out</button></div>{children}</div>;
   }
 
-  return <main className="adminPage"><div className="adminShell"><section className="adminPanel" style={{ maxWidth: 520, margin: "80px auto" }}><span className="kicker">AFRICHIKO · Operations</span><h1>Sign in to Operations</h1><p>Continue with one of the two authorized Africhiko Google accounts to manage fabrication enquiries and workshop content.</p>{error && <p role="alert">{error}</p>}<button className="button buttonPrimary" type="button" onClick={() => void signIn()} disabled={busy}>{busy ? "Opening Google sign-in…" : "Continue with Google ↗"}</button><p style={{ fontSize: 13, marginTop: 16 }}>Workshop access is limited to the two approved Africhiko email accounts.</p></section></div></main>;
+  return <main className="adminPage"><div className="adminShell"><section className="adminPanel" style={{ maxWidth: 520, margin: "80px auto" }}><span className="kicker">AFRICHIKO · Operations</span><h1>Sign in to Operations</h1><p>Continue with one of the two authorized Grandynamic Google accounts to manage fabrication enquiries and workshop content.</p>{error && <p role="alert">{error}</p>}<button className="button buttonPrimary" type="button" onClick={() => void signIn()} disabled={busy}>{busy ? "Opening Google sign-in…" : "Continue with Google ↗"}</button><p style={{ fontSize: 13, marginTop: 16 }}>Workshop access is limited to the two approved Grandynamic email accounts.</p></section></div></main>;
 }
