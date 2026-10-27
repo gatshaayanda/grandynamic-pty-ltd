@@ -3,7 +3,7 @@ import type { MetadataRoute } from "next";
 export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "Grandynamic Pty Ltd",
-    short_name: "Grandynamic Pty Ltd",
+    short_name: "Grandynamic",
     description: "Welding, steel fabrication and custom metalwork in Botswana. Describe your project and request a quotation.",
     start_url: "/",
     display: "standalone",
