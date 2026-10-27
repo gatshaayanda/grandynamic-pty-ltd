@@ -5,7 +5,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { auth, db, hasFirebaseWebConfig } from "@/lib/firebase/client";
 
-const ALLOWED_ADMIN_EMAILS = ["chikohoraknowledge4@gmail.com", "gatshaayanda@gmail.com"];
+const ALLOWED_ADMIN_EMAILS = ["gatshaayanda@gmail.com"];
 const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({ prompt: "select_account" });
 
@@ -88,5 +88,5 @@ export default function AdminGate({ children }: { children: React.ReactNode }) {
     return <div className="adminAuthorized"><div className="adminAccountBar"><span>Signed in as {user.email ?? "authorized staff"}</span><button className="button buttonLight" type="button" onClick={() => void signOut(auth)}>Sign out</button></div>{children}</div>;
   }
 
-  return <main className="adminPage"><div className="adminShell"><section className="adminPanel" style={{ maxWidth: 520, margin: "80px auto" }}><span className="kicker">GRANDYNAMIC · Operations</span><h1>Sign in to Operations</h1><p>Continue with one of the two authorized Grandynamic Google accounts to manage fabrication enquiries and workshop content.</p>{error && <p role="alert">{error}</p>}<button className="button buttonPrimary" type="button" onClick={() => void signIn()} disabled={busy}>{busy ? "Opening Google sign-in…" : "Continue with Google ↗"}</button><p style={{ fontSize: 13, marginTop: 16 }}>Workshop access is limited to the two approved Grandynamic email accounts.</p></section></div></main>;
+  return <main className="adminPage"><div className="adminShell"><section className="adminPanel" style={{ maxWidth: 520, margin: "80px auto" }}><span className="kicker">GRANDYNAMIC · Operations</span><h1>Sign in to Operations</h1><p>Continue with the authorized Grandynamic Google account to manage fabrication enquiries and workshop content.</p>{error && <p role="alert">{error}</p>}<button className="button buttonPrimary" type="button" onClick={() => void signIn()} disabled={busy}>{busy ? "Opening Google sign-in…" : "Continue with Google ↗"}</button><p style={{ fontSize: 13, marginTop: 16 }}>Workshop access is limited to the approved Grandynamic email account.</p></section></div></main>;
 }
