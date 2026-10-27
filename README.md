@@ -1,6 +1,6 @@
 # Grandynamic Pty Ltd
 
-Grandynamic Pty Ltd is a customer-first welding and steel-fabrication enquiry PWA for Botswana. This repository was founded from the approved Africhiko PWA baseline; its installation and chatbot behaviour must remain protected while business identity and presentation are adapted.
+Grandynamic Pty Ltd is a customer-first welding and steel-fabrication enquiry PWA for Botswana. This repository was adapted for Grandynamic from an earlier PWA foundation. The native installation behaviour is protected while identity and presentation are customized. A chatbot component is not currently present in this repository.
 
 ## Customer journey
 
@@ -59,6 +59,6 @@ Never commit `.env.local`, service-account credentials or other private secrets.
 ## Grandynamic setup checkpoint
 
 - Set `NEXT_PUBLIC_BASE_URL` to the actual production URL before release.
-- Configure a dedicated Grandynamic Firebase project and review Authentication, Firestore rules, Storage, server credentials, notification settings and admin allowlist before production use. Do not reuse Africhiko production credentials or data.
+- Configure a dedicated Grandynamic Firebase project and review Authentication, Firestore rules, server credentials, UploadThing, notification settings and the business owner's admin allowlist before production use. The current allowlist only includes `gatshaayanda@gmail.com`; confirm the actual business owner before production. Do not reuse Africhiko production credentials or data.
 - Confirm the business's approved admin Google account(s), phone/email, workshop address and final brand assets before publishing those details.
 - UploadThing is included in the codebase, but verify its route and environment configuration before claiming uploads are production-ready.
