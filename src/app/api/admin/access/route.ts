@@ -4,7 +4,7 @@ import { getAuth } from "firebase-admin/auth";
 import { getFirestore } from "firebase-admin/firestore";
 
 export const runtime = "nodejs";
-const ALLOWED_ADMIN_EMAILS = new Set(["chikohoraknowledge4@gmail.com", "gatshaayanda@gmail.com"]);
+const ALLOWED_ADMIN_EMAILS = new Set(["gatshaayanda@gmail.com"]);
 
 function getAdminApp() {
   if (getApps().length) return getApps()[0];
