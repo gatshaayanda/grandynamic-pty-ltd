@@ -9,7 +9,7 @@ import { app, auth, db, hasFirebaseWebConfig } from "@/lib/firebase/client";
 
 type Message = { id: string; senderUid: string; senderRole: "admin" | "customer"; body: string; createdAt?: string; createdAtServer?: { toDate?: () => Date } };
 
-export async function sendAfrichikoPush(enquiryId: string, title: string, message: string, link: string, kind: "new-enquiry" | "status" | "message", messageId?: string) {
+export async function sendGrandynamicPush(enquiryId: string, title: string, message: string, link: string, kind: "new-enquiry" | "status" | "message", messageId?: string) {
   const user = auth.currentUser;
   if (!user || !hasFirebaseWebConfig) return;
   try {
@@ -21,7 +21,7 @@ export async function sendAfrichikoPush(enquiryId: string, title: string, messag
     });
   } catch (error) {
     // The enquiry/message remains saved; push is an additional delivery channel.
-    console.warn("Africhiko push could not be requested:", error);
+    console.warn("Grandynamic push could not be requested:", error);
   }
 }
 
@@ -37,12 +37,12 @@ export function NotificationSettings({ user, role }: { user: User | null; role: 
     void isSupported().then(supported => {
       if (!active || !supported) return;
       unsubscribe = onMessage(getMessaging(app), async payload => {
-        const title = payload.notification?.title || payload.data?.title || "Africhiko update";
+        const title = payload.notification?.title || payload.data?.title || "Grandynamic update";
         const body = payload.notification?.body || payload.data?.body || "There is an update to your enquiry.";
         const registration = await navigator.serviceWorker.ready;
         await registration.showNotification(title, {
-          body, icon: "/africhiko-icon.svg", badge: "/africhiko-icon.svg",
-          tag: "africhiko-foreground-" + (payload.data?.enquiryId || "update"),
+          body, icon: "/grandynamic-icon.svg", badge: "/grandynamic-icon.svg",
+          tag: "grandynamic-foreground-" + (payload.data?.enquiryId || "update"),
           data: { link: typeof payload.data?.link === "string" && payload.data.link.startsWith("/") ? payload.data.link : role === "admin" ? "/admin" : "/account" },
         });
       });
@@ -147,7 +147,7 @@ export function EnquiryConversation({ enquiryId, user, role }: { enquiryId: stri
         createdAtServer: serverTimestamp(),
       });
       setDraft("");
-      await sendAfrichikoPush(enquiryId, role === "admin" ? "Message from Africhiko" : "New customer message", body.slice(0, 180), role === "admin" ? "/account" : "/admin", "message", messageRef.id);
+      await sendGrandynamicPush(enquiryId, role === "admin" ? "Message from Africhiko" : "New customer message", body.slice(0, 180), role === "admin" ? "/account" : "/admin", "message", messageRef.id);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Your message was not sent. Please retry.");
     } finally { setBusy(false); }
