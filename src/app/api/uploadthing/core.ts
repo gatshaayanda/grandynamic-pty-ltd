@@ -10,7 +10,7 @@ export const ourFileRouter = {
     video: { maxFileSize: "8MB", maxFileCount: 1 },
     pdf: { maxFileSize: "4MB", maxFileCount: 1 },
   }).onUploadComplete(async ({ file }) => {
-    console.info("[Africhiko] project reference uploaded", {
+    console.info("[Grandynamic] project reference uploaded", {
       name: file.name,
       size: file.size,
       type: file.type,
