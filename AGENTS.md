@@ -59,9 +59,9 @@ Use Grandynamic naming and its own approved project configuration in app-facing 
 
 ## Grandynamic identity reset — pending owner configuration
 
-- The initial baseline preserves the approved native install flow, dismissible install card, embedded-browser gate, iOS guidance, service-worker lifecycle and chatbot. Only identity, presentation and project-specific copy may change without explicit authorization.
-- Before production, replace inherited Firebase project IDs and allowlists with a dedicated Grandynamic configuration. Do not deploy until the business owner confirms the authorized Google account(s), contact details and workshop address.
-- Current implementation contains legacy business contact/auth configuration that must be reviewed before production. Never reuse Africhiko production credentials or data.
+- The current repository includes the approved native install flow, dismissible install card, embedded-browser gate, iOS guidance and service-worker lifecycle. No chatbot component exists in this repository; do not claim one is present or invent a replacement. If a chatbot is requested, first locate an approved implementation and preserve its interaction contract. Only identity, presentation and project-specific copy may change without explicit authorization.
+- Before production, configure the dedicated Grandynamic Firebase project and confirm the business owner’s authorized Google account(s), contact details and workshop address. The current code/rules allowlist is limited to `gatshaayanda@gmail.com` as a temporary bootstrap account; update client, server and Firestore allowlists together after the business owner confirms their account.
+- Never reuse Africhiko production credentials, customer data or deployment identifiers.
 - Keep the existing customer enquiry/account journey and admin CRUD intact; no enquiry is a confirmed quote until the workshop reviews it.
 
 
