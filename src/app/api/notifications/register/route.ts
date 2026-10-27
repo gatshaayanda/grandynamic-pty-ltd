@@ -23,7 +23,7 @@ export async function POST(request: Request) {
     }, { merge: true });
     return NextResponse.json({ registered: true });
   } catch (error) {
-    console.error("Africhiko notification registration failed:", error);
+    console.error("Grandynamic notification registration failed:", error);
     return NextResponse.json({ error: error instanceof Error ? error.message : "Could not register this device." }, { status: 400 });
   }
 }
