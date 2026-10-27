@@ -1,17 +1,7 @@
-import type { Metadata } from "next";
-import { Suspense } from "react";
-import BookForm from "./book-form";
+import { redirect } from "next/navigation";
 
-export const metadata: Metadata = {
-  title: "Request Assistance",
-  description: "Request tyre fitting, puncture repair, pressure checks, tyre sales or roadside assistance from Namane Tyres in Gaborone.",
-  alternates: { canonical: "/book" },
-};
-
-export default function BookPage() {
-  return (
-    <Suspense fallback={<main className="bookPage"><div className="formWrap"><div className="formCard">Loading booking form…</div></div></main>}>
-      <BookForm />
-    </Suspense>
-  );
+// This inherited URL was for Namane Tyres roadside assistance. Grandynamic
+// accepts welding and fabrication enquiries through the project enquiry flow.
+export default function LegacyBookRedirect() {
+  redirect("/enquiry");
 }
