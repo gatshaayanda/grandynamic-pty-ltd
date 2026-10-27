@@ -1,6 +1,5 @@
 import { timingSafeEqual } from "node:crypto";
 import { NextResponse } from "next/server";
-import { getAuth } from "firebase-admin/auth";
 import { notificationServices } from "@/lib/server/firebase-admin";
 
 export const runtime = "nodejs";
@@ -39,7 +38,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "This admin account is not available for password sign-in." }, { status: 403 });
     }
 
-    const customToken = await getAuth().createCustomToken(user.uid, { adminPasswordSignIn: true });
+    const customToken = await auth.createCustomToken(user.uid, { adminPasswordSignIn: true });
     return NextResponse.json({ customToken }, { headers: { "Cache-Control": "no-store" } });
   } catch (error) {
     console.error("Grandynamic admin password sign-in failed:", error);
