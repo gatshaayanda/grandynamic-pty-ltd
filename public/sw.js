@@ -36,27 +36,27 @@ importScripts(
   "/api/firebase/messaging-sw-config"
 );
 
-// Add FCM reception without changing Africhiko's existing install, cache, update,
+// Add FCM reception without changing Grandynamic's existing install, cache, update,
 // or offline-fetch behaviour below.
-let africhikoMessaging = null;
+let grandynamicMessaging = null;
 try {
-  const config = self.__AFRICHIKO_FIREBASE_CONFIG__;
+  const config = self.__GRANDYNAMIC_FIREBASE_CONFIG__;
   if (config && config.apiKey && config.projectId && config.messagingSenderId && config.appId) {
     if (!firebase.apps.length) firebase.initializeApp(config);
-    africhikoMessaging = firebase.messaging();
-    africhikoMessaging.onBackgroundMessage((payload) => {
+    grandynamicMessaging = firebase.messaging();
+    grandynamicMessaging.onBackgroundMessage((payload) => {
       if (payload.notification) return;
       const data = payload.data || {};
       return self.registration.showNotification(data.title || "Grandynamic update", {
         body: data.body || "There is an update to your project enquiry.",
         icon: "/grandynamic-icon.svg",
         badge: "/grandynamic-icon.svg",
-        tag: "africhiko-" + (data.enquiryId || "update"),
+        tag: "grandynamic-" + (data.enquiryId || "update"),
         data: { link: typeof data.link === "string" && data.link.startsWith("/") ? data.link : "/account" }
       });
     });
   } else {
-    console.warn("Africhiko Firebase Messaging web config is incomplete.");
+    console.warn("Grandynamic Firebase Messaging web config is incomplete.");
   }
 } catch (error) {
   console.warn("Grandynamic background notifications could not initialize.", error);
@@ -64,7 +64,7 @@ try {
 
 const CACHE_NAME = "grandynamic-shell-v1";
 const APP_SHELL = ["/", "/services", "/enquiry", "/basket", "/account", "/offline", "/grandynamic-icon.svg"];
-const PUBLIC_MEDIA = ["/videos/enter.mp4", "/videos/gear.mp4", "/videos/outside.mp4"];
+const PUBLIC_MEDIA = ["/grandynamic-media/redgate.jpg", "/grandynamic-media/fancygate.jpg", "/grandynamic-media/intro.mp4", "/grandynamic-media/spraying.mp4"];
 
 self.addEventListener("install", event => {
   event.waitUntil(
