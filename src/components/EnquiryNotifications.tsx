@@ -46,23 +46,23 @@ export function NotificationSettings({ user, role }: { user: User | null; role: 
           data: { link: typeof payload.data?.link === "string" && payload.data.link.startsWith("/") ? payload.data.link : role === "admin" ? "/admin" : "/account" },
         });
       });
-    }).catch(error => console.warn("Africhiko foreground notification listener failed:", error));
+    }).catch(error => console.warn("Grandynamic foreground notification listener failed:", error));
     return () => { active = false; unsubscribe?.(); };
   }, [state, user, role]);
   async function enable() {
-    if (!user) { setState("error"); setMessage("Sign in first so this device can be linked to your Africhiko account."); return; }
+    if (!user) { setState("error"); setMessage("Sign in first so this device can be linked to your Grandynamic account."); return; }
     if (!hasFirebaseWebConfig) { setState("error"); setMessage("Firebase is not configured in this environment."); return; }
     const vapidKey = process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY;
-    if (!vapidKey) { setState("error"); setMessage("Push notifications are not configured yet. Add Africhiko's public VAPID key to NEXT_PUBLIC_FIREBASE_VAPID_KEY in Vercel, then redeploy."); return; }
+    if (!vapidKey) { setState("error"); setMessage("Push notifications are not configured yet. Add Grandynamic's public VAPID key to NEXT_PUBLIC_FIREBASE_VAPID_KEY in Vercel, then redeploy."); return; }
     if (typeof window === "undefined" || !("Notification" in window) || !("serviceWorker" in navigator) || !("PushManager" in window)) {
-      setState("error"); setMessage("This browser does not support web push. Try current Chrome or install Africhiko from Safari on an iPhone/iPad before enabling notifications."); return;
+      setState("error"); setMessage("This browser does not support web push. Try current Chrome or install Grandynamic from Safari on an iPhone/iPad before enabling notifications."); return;
     }
     setState("working"); setMessage("");
     try {
       const supported = await isSupported();
       if (!supported) throw new Error("Firebase messaging is not supported by this browser.");
       if (Notification.permission === "denied") {
-        throw new Error("Chrome is blocking Africhiko notifications, so this button cannot reopen the permission prompt. In Chrome, open africhiko.vercel.app, tap the site controls beside the address bar → Permissions → Notifications → Allow, then reload this page and try again.");
+        throw new Error("Chrome is blocking Grandynamic notifications, so this button cannot reopen the permission prompt. In Chrome, open this website, tap the site controls beside the address bar → Permissions → Notifications → Allow, then reload this page and try again.");
       }
       const permission = Notification.permission === "granted" ? "granted" : await Notification.requestPermission();
       if (permission !== "granted") throw new Error("Notification permission was not granted. Choose Allow in Chrome’s permission prompt, then try again.");
@@ -100,7 +100,7 @@ export function NotificationSettings({ user, role }: { user: User | null; role: 
       });
       const result = await response.json().catch(() => ({})) as { sent?: boolean; error?: string };
       if (!response.ok || !result.sent) throw new Error(result.error || "Firebase Cloud Messaging did not accept the test notification.");
-      setMessage("Firebase accepted the test request for this registered device. This confirms server acceptance only, not that the phone displayed it. Put Africhiko in the background, check the notification tray and Chrome site permissions. If nothing arrives, reload Africhiko and register this device again.");
+      setMessage("Firebase accepted the test request for this registered device. This confirms server acceptance only, not that the phone displayed it. Put Grandynamic in the background, check the notification tray and Chrome site permissions. If nothing arrives, reload Grandynamic and register this device again.");
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "The test notification could not be requested.");
       setState("error");
@@ -147,7 +147,7 @@ export function EnquiryConversation({ enquiryId, user, role }: { enquiryId: stri
         createdAtServer: serverTimestamp(),
       });
       setDraft("");
-      await sendGrandynamicPush(enquiryId, role === "admin" ? "Message from Africhiko" : "New customer message", body.slice(0, 180), role === "admin" ? "/account" : "/admin", "message", messageRef.id);
+      await sendGrandynamicPush(enquiryId, role === "admin" ? "Message from Grandynamic" : "New customer message", body.slice(0, 180), role === "admin" ? "/account" : "/admin", "message", messageRef.id);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Your message was not sent. Please retry.");
     } finally { setBusy(false); }
@@ -157,7 +157,7 @@ export function EnquiryConversation({ enquiryId, user, role }: { enquiryId: stri
     <h4>Messages with {role === "admin" ? "the customer" : "the workshop"}</h4>
     <div className="af-conversation-list" aria-live="polite">
       {messages.map(item => <article key={item.id} className={"af-message " + (item.senderUid === user?.uid ? "af-message-own" : "")}>
-        <strong>{item.senderRole === "admin" ? "Africhiko workshop" : "Customer"}</strong>
+        <strong>{item.senderRole === "admin" ? "Grandynamic workshop" : "Customer"}</strong>
         <p>{item.body}</p>
         <small>{item.createdAtServer?.toDate?.()?.toLocaleString() || item.createdAt || "Just sent"}</small>
       </article>)}
