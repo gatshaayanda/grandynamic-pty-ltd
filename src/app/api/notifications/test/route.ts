@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { notificationServices } from "@/lib/server/firebase-admin";
 
 export const runtime = "nodejs";
-const ALLOWED_ADMIN_EMAILS = new Set(["chikohoraknowledge4@gmail.com", "gatshaayanda@gmail.com"]);
+const ALLOWED_ADMIN_EMAILS = new Set(["gatshaayanda@gmail.com"]);
 
 export async function POST(request: Request) {
   try {
