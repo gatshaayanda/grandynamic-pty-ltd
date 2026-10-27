@@ -18,7 +18,7 @@ export async function POST(request: Request) {
     const isAdmin = ALLOWED_ADMIN_EMAILS.has(String(decoded.email || "").trim().toLowerCase()) && role.exists && ["owner", "staff"].includes(String(role.data()?.role || "").toLowerCase());
     const title = isAdmin ? "Grandynamic workshop alerts are on" : "Grandynamic notifications are on";
     const message = isAdmin ? "This device is ready for enquiry and customer-message alerts." : "This device is ready for enquiry progress and workshop message alerts.";
-    const publicUrl = process.env.AFRICHIKO_PUBLIC_URL || process.env.NEXT_PUBLIC_BASE_URL || "https://grandynamic.vercel.app";
+    const publicUrl = process.env.GRANDYNAMIC_PUBLIC_URL || process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
     const result = await messaging.send({
       token: body.token,
       notification: { title, body: message },
