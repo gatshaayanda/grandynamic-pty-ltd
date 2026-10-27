@@ -95,7 +95,7 @@
   .af-service-card{transition:none}
 }
 
-/* Africhiko media polish: use the supplied workshop footage instead of generated placeholders. */
+/* Grandynamic media polish: use the supplied workshop footage instead of generated placeholders. */
 .af-hero-visual{isolation:isolate}.af-hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.9}.af-hero-visual:after{content:"";position:absolute;inset:0;z-index:0;background:linear-gradient(180deg,rgba(17,15,23,.04) 20%,rgba(17,15,23,.82) 100%);pointer-events:none}.af-visual-label,.af-visual-caption{z-index:1}.af-service-art{position:relative;isolation:isolate;overflow:hidden;background:#24202b}.af-service-art:after{content:"";position:absolute;inset:0;z-index:0;background:linear-gradient(180deg,rgba(18,15,25,.08),rgba(18,15,25,.82));pointer-events:none}.af-service-art video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.9}.af-service-art span,.af-service-art small{position:relative;z-index:1;color:#fff;text-shadow:0 1px 5px rgba(0,0,0,.55)}.af-service-art small{letter-spacing:.14em}.af-media-fallback-hidden{opacity:0;pointer-events:none}@media(prefers-reduced-motion:reduce){.af-service-art video,.af-hero-video{display:none}}
 
 /* Spark Catcher: optional, self-contained workshop mini-game. */
@@ -104,7 +104,7 @@
 @media(max-width:760px){.af-spark-section{grid-template-columns:1fr;gap:18px;padding:26px 18px}.af-spark-copy{max-width:none}.af-spark-copy h2{font-size:2.35rem}.af-spark-stats{margin:14px 0}.af-spark-game{height:280px}}
 
 
-/* Africhiko home: one clear project action, one account route, real workshop footage, then the optional game. */
+/* Grandynamic home: one clear project action, one account route, real workshop footage, then the optional game. */
 .af-home-hero{min-height:min(720px,calc(100svh - 112px));gap:clamp(28px,4.5vw,64px);padding-top:clamp(38px,5.5vw,76px);padding-bottom:clamp(38px,5.5vw,76px)}
 .af-home-copy{max-width:620px}
 .af-home-hero .af-hero-intro{max-width:510px}
@@ -123,7 +123,7 @@
   .af-game-jump{margin-top:20px;font-size:.74rem}
 }
 
-/* My Africhiko is deliberately the final customer action on the home page. */
+/* My Grandynamic is deliberately the final customer action on the home page. */
 .af-account-bottom{display:flex;align-items:center;justify-content:space-between;gap:32px;padding:clamp(44px,6vw,76px) max(22px,calc((100% - 1240px)/2));background:#fff;border-top:1px solid var(--line)}.af-account-bottom h2{margin:0;font-size:clamp(2.3rem,4.5vw,4rem);line-height:.96;letter-spacing:-.06em}.af-account-bottom h2 em{color:var(--violet);font-style:normal}.af-account-bottom p:not(.af-eyebrow){max-width:600px;color:var(--muted);line-height:1.65}.af-account-bottom>.af-button{flex-shrink:0}@media(max-width:680px){.af-account-bottom{align-items:stretch;flex-direction:column;gap:18px}.af-account-bottom>.af-button{width:100%}}
 
 
