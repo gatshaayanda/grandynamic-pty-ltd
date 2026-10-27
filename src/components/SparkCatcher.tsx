@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-const BEST_KEY="africhiko-spark-catcher-best";
+const BEST_KEY="grandynamic-spark-catcher-best";
 export default function SparkCatcher(){
  const mount=useRef<HTMLDivElement>(null); const [best,setBest]=useState(0); const [ready,setReady]=useState(false);
  useEffect(()=>{try{setBest(Number(localStorage.getItem(BEST_KEY))||0)}catch{} let game:import("phaser").Game|undefined;let cancelled=false;
