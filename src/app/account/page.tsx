@@ -4,7 +4,7 @@ import AfrichikoPortal from "@/components/AfrichikoPortal";
 
 export const metadata: Metadata = {
   title: "My enquiries",
-  description: "Review your Africhiko project enquiries.",
+  description: "Review your Grandynamic project enquiries.",
 };
 
 export default function AccountPage() {
