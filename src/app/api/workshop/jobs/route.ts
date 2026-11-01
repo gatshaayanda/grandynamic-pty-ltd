@@ -72,7 +72,7 @@ export async function PATCH(request: Request) {
     const customerUpdate = clean(body?.customerUpdate, 1000);
     const internalNotes = clean(body?.internalNotes, 3000);
     const waitEstimate = clean(body?.waitEstimate, 80);
-    const progressMedia = Array.isArray(body?.progressMedia) ? body.progressMedia.slice(-12).filter((item: unknown): item is { url: string; caption?: string; createdAt?: string } => !!item && typeof item === "object" && "url" in item && typeof item.url === "string" && item.url.startsWith("https://") && item.url.length <= 2048).map(item => ({ url: item.url, caption: clean(item.caption, 180), createdAt: clean(item.createdAt, 40) })) : (Array.isArray(current.progressMedia) ? current.progressMedia : []);
+    const progressMedia = Array.isArray(body?.progressMedia) ? body.progressMedia.slice(-12).filter((item: unknown): item is { url: string; caption?: string; createdAt?: string } => !!item && typeof item === "object" && "url" in item && typeof item.url === "string" && item.url.startsWith("https://") && item.url.length <= 2048).map((item: { url: string; caption?: string; createdAt?: string }) => ({ url: item.url, caption: clean(item.caption, 180), createdAt: clean(item.createdAt, 40) })) : (Array.isArray(current.progressMedia) ? current.progressMedia : []);
     if (!STATUSES.includes(status as typeof STATUSES[number])) return NextResponse.json({ error: "Choose a valid job status." }, { status: 422 });
     const now = new Date().toISOString();
     const update = customerUpdate || (status !== current.status ? "Your project status has been updated by the workshop." : String(current.customerUpdate || ""));
