@@ -4,7 +4,7 @@ import Link from "next/link";
 
 type Timeline = { status: string; update: string; createdAt: string };
 type Message = { id: string; message: string; from: string; createdAt: string };
-type Project = { project: string; description: string; status: string; customerUpdate: string; waitEstimate?: string; createdAt: string; updatedAt: string; timeline: Timeline[] };
+type Project = { project: string; description: string; status: string; customerUpdate: string; progressMedia?: { url: string; caption?: string; createdAt?: string }[]; waitEstimate?: string; createdAt: string; updatedAt: string; timeline: Timeline[] };
 const stages = ["Queued", "Accepted", "In progress", "Awaiting customer", "Ready for collection", "Completed"];
 export default function ProjectProgress({ shareId }: { shareId: string }) {
   const [project, setProject] = useState<Project | null>(null);
@@ -49,6 +49,7 @@ export default function ProjectProgress({ shareId }: { shareId: string }) {
         <article className="af-project-panel">
           <div className="af-project-status"><span>Current status</span><strong>{project.status}</strong></div>
           <p className="af-eyebrow">PROJECT</p><h2>{project.project}</h2><p>{project.description}</p>
+          {project.progressMedia?.length ? <><h3>Workshop progress photos</h3><div className="af-project-photo-grid">{project.progressMedia.map((photo, index) => <figure key={photo.url + index}><img src={photo.url} alt={photo.caption || "Grandynamic workshop progress"}/><figcaption>{photo.caption || "Workshop progress"}{photo.createdAt ? " · " + new Date(photo.createdAt).toLocaleDateString() : ""}</figcaption></figure>)}</div></> : null}
           {project.waitEstimate && <div className="af-project-update"><span>Workshop estimate</span><p>{project.waitEstimate}</p></div>}<div className="af-project-update"><span>Latest workshop update</span><p>{project.customerUpdate}</p><small>Updated {new Date(project.updatedAt).toLocaleString()}</small></div>
           <div className="af-project-stages" aria-label="Project progress">
             {stages.filter(s => s !== "Cancelled").map((stage, index) => <div className={stages.indexOf(project.status) >= index ? "af-project-stage done" : "af-project-stage"} key={stage}><span>{index + 1}</span><strong>{stage}</strong></div>)}
