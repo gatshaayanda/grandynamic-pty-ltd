@@ -5,6 +5,7 @@ import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut, type 
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db, hasFirebaseWebConfig } from "@/lib/firebase/client";
 
+type Message = { id: string; message: string; from: string; createdAt: string };
 type Job = { id: string; shareId: string; customerName: string; phone: string; project: string; description: string; source: string; status: string; waitEstimate: string; customerUpdate: string; internalNotes: string; createdAt: string; updatedAt: string };
 const STATUSES = ["Queued", "Accepted", "In progress", "Awaiting customer", "Ready for collection", "Completed", "Cancelled"];
 const allowed = ["gatshaayanda@gmail.com", "chikohoraknowledge4@gmail.com"];
@@ -18,6 +19,8 @@ function WorkshopBoard() {
   const [draft, setDraft] = useState({ customerName: "", phone: "", project: "", description: "", source: "Walk-in" });
   const [notice, setNotice] = useState("");
   const [loading, setLoading] = useState(false);
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [reply, setReply] = useState("");
   const token = useCallback(async () => {
     if (!auth.currentUser) throw new Error("Sign in to Operations again.");
     return auth.currentUser.getIdToken();
@@ -53,6 +56,7 @@ function WorkshopBoard() {
     finally { setChecking(false); }
   }), []);
   useEffect(() => { if (authorized) void load(); }, [authorized, load]);
+  useEffect(() => { if (!authorized || !selected) { setMessages([]); return; } let active = true; void request("/api/workshop/messages?shareId=" + selected.shareId).then(data => { if (active) setMessages(data.messages || []); }).catch(e => { if (active) setNotice(e instanceof Error ? e.message : "Project messages could not be loaded."); }); return () => { active = false; }; }, [authorized, selected?.shareId, request]);
   async function login() {
     if (!hasFirebaseWebConfig) { setNotice("Grandynamic Google sign-in is not configured."); return; }
     setBusy(true); setNotice("");
@@ -78,6 +82,7 @@ function WorkshopBoard() {
     catch (e) { setNotice(e instanceof Error ? e.message : "Update could not be saved."); }
     finally { setBusy(false); }
   }
+  async function sendReply() { if (!selected || !reply.trim()) return; setBusy(true); setNotice(""); try { const data = await request("/api/workshop/messages", { method: "POST", body: JSON.stringify({ shareId: selected.shareId, message: reply.trim() }) }); setMessages(items => [...items, data]); setReply(""); setNotice("Reply sent to the customer project page."); } catch (e) { setNotice(e instanceof Error ? e.message : "Reply could not be sent."); } finally { setBusy(false); } }
   const share = selected && typeof window !== "undefined" ? window.location.origin + "/project/" + selected.shareId : "";
   const whatsapp = selected ? "https://wa.me/" + selected.phone.replace(/\D/g, "") + "?text=" + encodeURIComponent("Hello " + selected.customerName + ", Grandynamic has set up a private progress page for your project: " + share + " — you can follow workshop updates and message us there.") : "#";
   if (checking) return <main className="af-site"><section className="af-project-wrap"><p>Checking workshop access…</p></section></main>;
@@ -89,7 +94,7 @@ function WorkshopBoard() {
       <section className="af-project-panel"><div className="af-workshop-list-heading"><div><p className="af-eyebrow">WORKSHOP QUEUE</p><h2>{jobs.length} recorded projects</h2></div><button className="af-button af-button-outline af-button-small" type="button" onClick={() => void load()} disabled={loading}>{loading ? "Refreshing…" : "Refresh"}</button></div>
         {loading ? <p>Loading workshop jobs…</p> : jobs.length ? <div className="af-workshop-list">{jobs.map(job => <button key={job.id} type="button" className={selected?.id === job.id ? "selected" : ""} onClick={() => setSelected(job)}><span><strong>{job.customerName}</strong><small>{job.project} · {job.source}</small></span><b>{job.status}</b></button>)}</div> : <p>No workshop jobs yet. Add the first walk-in or customer project.</p>}
         {selected && <div className="af-workshop-detail"><p className="af-eyebrow">PROJECT CONTROL / {selected.id.slice(0, 8).toUpperCase()}</p><h2>{selected.project}</h2><p>{selected.customerName} · {selected.phone}</p><div className="af-form"><label>Job status<select value={selected.status} onChange={e => setSelected(v => v ? ({ ...v, status: e.target.value }) : v)}>{STATUSES.map(s => <option key={s}>{s}</option>)}</select></label><label>Customer-facing progress update<textarea rows={3} maxLength={1000} value={selected.customerUpdate} onChange={e => setSelected(v => v ? ({ ...v, customerUpdate: e.target.value }) : v)} /></label><label>Wait estimate (optional)<input value={selected.waitEstimate} onChange={e => setSelected(v => v ? ({ ...v, waitEstimate: e.target.value }) : v)} placeholder="e.g. Reviewing this week (only if realistic)"/></label><label>Internal workshop notes (not shared)<textarea rows={3} maxLength={3000} value={selected.internalNotes} onChange={e => setSelected(v => v ? ({ ...v, internalNotes: e.target.value }) : v)} /></label><button className="af-button" type="button" disabled={busy} onClick={() => void saveUpdate()}>{busy ? "Saving…" : "Save workshop update"}</button></div>
-          <div className="af-workshop-share"><a className="af-button" href={whatsapp} target="_blank" rel="noreferrer">Share progress on WhatsApp ↗</a><button className="af-button af-button-outline" type="button" onClick={() => { void navigator.clipboard.writeText(share); setNotice("Customer project link copied."); }}>Copy customer link</button><a className="af-text-link" href={share} target="_blank" rel="noreferrer">Open customer view ↗</a></div>
+          <div className="af-workshop-share"><a className="af-button" href={whatsapp} target="_blank" rel="noreferrer">Share progress on WhatsApp ↗</a><button className="af-button af-button-outline" type="button" onClick={() => { void navigator.clipboard.writeText(share); setNotice("Customer project link copied."); }}>Copy customer link</button><a className="af-text-link" href={share} target="_blank" rel="noreferrer">Open customer view ↗</a></div><div className="af-workshop-conversation"><p className="af-eyebrow">CUSTOMER CONVERSATION</p><h3>{messages.length ? messages.length + " messages" : "No messages yet"}</h3><div className="af-project-messages">{messages.map(item => <article key={item.id} className={item.from === "workshop" ? "workshop" : "customer"}><strong>{item.from === "workshop" ? "Grandynamic workshop" : "Customer"}</strong><p>{item.message}</p><small>{new Date(item.createdAt).toLocaleString()}</small></article>)}{!messages.length && <p>No customer messages yet. Replies from the customer progress page will appear here.</p>}</div><label className="af-project-message-label">Reply to customer<textarea rows={3} maxLength={1000} value={reply} onChange={e => setReply(e.target.value)} placeholder="Write a project update or answer…"/></label><button className="af-button" type="button" disabled={!reply.trim() || busy} onClick={() => void sendReply()}>{busy ? "Sending…" : "Send customer reply"}</button></div>
         </div>}
       </section></div>
       <p className="af-form-footnote">Customer progress links show only the project description, public status and updates. Customer phone numbers and internal notes remain in Operations.</p>
