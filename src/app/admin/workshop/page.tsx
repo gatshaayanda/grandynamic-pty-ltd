@@ -56,7 +56,8 @@ function WorkshopBoard() {
     finally { setChecking(false); }
   }), []);
   useEffect(() => { if (authorized) void load(); }, [authorized, load]);
-  useEffect(() => { if (!authorized || !selected) { setMessages([]); return; } let active = true; void request("/api/workshop/messages?shareId=" + selected.shareId).then(data => { if (active) setMessages(data.messages || []); }).catch(e => { if (active) setNotice(e instanceof Error ? e.message : "Project messages could not be loaded."); }); return () => { active = false; }; }, [authorized, selected?.shareId, request]);
+  const selectedShareId = selected?.shareId;
+  useEffect(() => { if (!authorized || !selectedShareId) { setMessages([]); return; } let active = true; void request("/api/workshop/messages?shareId=" + selectedShareId).then(data => { if (active) setMessages(data.messages || []); }).catch(e => { if (active) setNotice(e instanceof Error ? e.message : "Project messages could not be loaded."); }); return () => { active = false; }; }, [authorized, selectedShareId, request]);
   async function login() {
     if (!hasFirebaseWebConfig) { setNotice("Grandynamic Google sign-in is not configured."); return; }
     setBusy(true); setNotice("");
