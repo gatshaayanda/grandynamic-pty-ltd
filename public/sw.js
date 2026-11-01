@@ -49,8 +49,8 @@ try {
       const data = payload.data || {};
       return self.registration.showNotification(data.title || "Grandynamic update", {
         body: data.body || "There is an update to your project enquiry.",
-        icon: "/grandynamic-icon.svg",
-        badge: "/grandynamic-icon.svg",
+        icon: "/grandynamic-pwa-icon-v3.svg?v=3",
+        badge: "/grandynamic-pwa-icon-v3.svg?v=3",
         tag: "grandynamic-" + (data.enquiryId || "update"),
         data: { link: typeof data.link === "string" && data.link.startsWith("/") ? data.link : "/account" }
       });
@@ -62,8 +62,8 @@ try {
   console.warn("Grandynamic background notifications could not initialize.", error);
 }
 
-const CACHE_NAME = "grandynamic-shell-v2";
-const APP_SHELL = ["/", "/services", "/enquiry", "/basket", "/account", "/offline", "/grandynamic-icon.svg", "/grandynamic-install-icon.svg"];
+const CACHE_NAME = "grandynamic-shell-v3";
+const APP_SHELL = ["/", "/services", "/enquiry", "/basket", "/account", "/offline", "/grandynamic-pwa-icon-v3.svg?v=3", "/grandynamic-pwa-icon-v3.svg?v=3"];
 const PUBLIC_MEDIA = ["/grandynamic-media/redgate.jpg", "/grandynamic-media/fancygate.jpg", "/grandynamic-media/intro.mp4", "/grandynamic-media/spraying.mp4"];
 
 self.addEventListener("install", event => {
