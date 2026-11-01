@@ -62,8 +62,8 @@ try {
   console.warn("Grandynamic background notifications could not initialize.", error);
 }
 
-const CACHE_NAME = "grandynamic-shell-v1";
-const APP_SHELL = ["/", "/services", "/enquiry", "/basket", "/account", "/offline", "/grandynamic-icon.svg"];
+const CACHE_NAME = "grandynamic-shell-v2";
+const APP_SHELL = ["/", "/services", "/enquiry", "/basket", "/account", "/offline", "/grandynamic-icon.svg", "/grandynamic-install-icon.svg"];
 const PUBLIC_MEDIA = ["/grandynamic-media/redgate.jpg", "/grandynamic-media/fancygate.jpg", "/grandynamic-media/intro.mp4", "/grandynamic-media/spraying.mp4"];
 
 self.addEventListener("install", event => {
