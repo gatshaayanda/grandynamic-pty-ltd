@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
   openGraph: { type: "website", url: siteUrl, siteName: "Grandynamic Pty Ltd", title: "Grandynamic Pty Ltd | Welding & Steel Fabrication", description: "Welding and steel fabrication in Botswana. Tell us about your project and request a quotation." },
   twitter: { card: "summary", title: "Grandynamic Pty Ltd | Welding & Steel Fabrication", description: "Welding and steel fabrication in Botswana. Tell us about your project and request a quotation." },
-  icons: { icon: "/grandynamic-icon.svg", apple: "/grandynamic-icon.svg" },
+  icons: { icon: [{ url: "/grandynamic-pwa-icon-v3.svg?v=3", type: "image/svg+xml", sizes: "any" }], apple: [{ url: "/grandynamic-pwa-icon-v3.svg?v=3", type: "image/svg+xml", sizes: "any" }] },
   manifest: "/manifest.webmanifest",
   appleWebApp: { capable: true, title: "Grandynamic Pty Ltd", statusBarStyle: "default" },
 };
