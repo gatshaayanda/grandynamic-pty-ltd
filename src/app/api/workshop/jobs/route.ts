@@ -28,7 +28,8 @@ export async function GET(request: Request) {
   try {
     const { db } = await requireStaff(request);
     const snapshot = await db.collection("workshopJobs").get();
-    const jobs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })).sort((a: any, b: any) => { const aClosed = ["Completed", "Cancelled"].includes(String(a.status)); const bClosed = ["Completed", "Cancelled"].includes(String(b.status)); return Number(aClosed) - Number(bClosed) || String(a.createdAt || "").localeCompare(String(b.createdAt || "")); });
+    const rows: Array<{ id: string; status?: string; createdAt?: string; [key: string]: unknown }> = snapshot.docs.map(item => ({ id: item.id, ...item.data() }));
+    const jobs = rows.sort((a, b) => { const aClosed = ["Completed", "Cancelled"].includes(String(a.status)); const bClosed = ["Completed", "Cancelled"].includes(String(b.status)); return Number(aClosed) - Number(bClosed) || String(a.createdAt || "").localeCompare(String(b.createdAt || "")); });
     return NextResponse.json({ jobs }, { headers: { "Cache-Control": "no-store" } });
   } catch (error) { return fail(error); }
 }
