@@ -339,3 +339,72 @@
  .af-home-work-card,.af-home-work-media>img,.af-service-photo,.af-button{transition:none}
  .af-home-work-card:hover .af-home-work-media>img,.af-service-card:hover .af-service-photo{transform:none}
 }
+
+
+/* Grandynamic workshop queue and private customer project tracker. */
+.af-workshop-wrap,.af-project-wrap{width:min(1240px,100%);margin:0 auto;padding:clamp(30px,5vw,66px) 22px 76px}
+.af-workshop-heading{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:26px}
+.af-workshop-heading h1,.af-project-heading h1{margin:0;color:#20252a;font-size:clamp(2.8rem,6vw,5.4rem);line-height:.93;letter-spacing:-.07em}
+.af-workshop-heading h1 em,.af-project-heading h1 em{color:#c34812;font-family:Georgia,serif;font-weight:500}
+.af-workshop-heading>div>p:last-child,.af-project-heading>p:last-child{max-width:620px;color:#59656b;line-height:1.7}
+.af-workshop-count{display:grid;min-width:120px;padding:17px 20px;border:1px solid #e5c4b2;border-radius:10px;background:#fff7f2;text-align:center}
+.af-workshop-count strong{color:#b44415;font-size:2.1rem;line-height:1}
+.af-workshop-count span{margin-top:7px;color:#59656b;font-size:.72rem;font-weight:800}
+.af-workshop-grid{display:grid;grid-template-columns:minmax(280px,.78fr) minmax(0,1.22fr);gap:20px;align-items:start}
+.af-project-panel{min-width:0;padding:clamp(19px,3vw,28px);border:1px solid #e0e4e5;border-radius:12px;background:#fff;box-shadow:0 10px 30px #20252a0a}
+.af-project-panel h2{margin:4px 0 12px;color:#252c32;font-size:clamp(1.45rem,3vw,2rem);letter-spacing:-.04em}
+.af-project-panel>p:not(.af-eyebrow){color:#59656b;line-height:1.65}
+.af-workshop-list{display:grid;gap:8px;max-height:620px;overflow:auto}
+.af-workshop-list>button{display:flex;justify-content:space-between;align-items:center;gap:12px;width:100%;padding:14px;border:1px solid #e1e5e6;border-radius:8px;background:#fafbfb;color:#252c32;text-align:left}
+.af-workshop-list>button.selected{border-color:#c34812;background:#fff6f1;box-shadow:inset 3px 0 #c34812}
+.af-workshop-list>button>span{display:grid;gap:5px;min-width:0}
+.af-workshop-list>button strong{font-size:.9rem}
+.af-workshop-list>button small{color:#667178;font-size:.74rem;line-height:1.4}
+.af-workshop-list>button>b{flex-shrink:0;color:#a94317;font-size:.72rem;text-align:right}
+.af-workshop-detail{margin-top:22px;padding-top:20px;border-top:1px solid #e2e6e7}
+.af-workshop-detail>p:not(.af-eyebrow){color:#5d686e;font-size:.82rem}
+.af-workshop-share{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:18px}
+.af-workshop-share .af-button{font-size:.76rem}
+.af-project-heading{margin-bottom:24px}
+.af-project-heading h1{font-size:clamp(3rem,7vw,6rem)}
+.af-project-status{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px;padding:15px 17px;border:1px solid #e6c4b1;border-radius:8px;background:#fff7f2}
+.af-project-status span,.af-project-update>span{color:#8c4a2e;font-size:.7rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase}
+.af-project-status strong{color:#a93b0e;font-size:.9rem}
+.af-project-update{margin:22px 0;padding:18px;border-left:3px solid #c34812;background:#f5f6f5}
+.af-project-update p{margin:8px 0;color:#29343a;font-weight:700;line-height:1.6}
+.af-project-update small,.af-project-timeline small,.af-project-messages small{color:#758087;font-size:.7rem}
+.af-project-stages{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:24px 0 30px}
+.af-project-stage{display:flex;align-items:center;gap:8px;min-width:0;padding:10px;border:1px solid #e1e5e6;border-radius:7px;color:#79838a}
+.af-project-stage span{display:grid;place-items:center;flex:0 0 25px;width:25px;height:25px;border-radius:50%;background:#edf0f1;font-size:.7rem;font-weight:900}
+.af-project-stage strong{font-size:.68rem;line-height:1.3}
+.af-project-stage.done{border-color:#e4b69e;background:#fff8f4;color:#9e3d14}
+.af-project-stage.done span{background:#c34812;color:#fff}
+.af-project-timeline{display:grid;gap:0;margin:10px 0 20px;border-left:2px solid #e2c1af}
+.af-project-timeline article{position:relative;padding:0 0 17px 18px}
+.af-project-timeline article:before{content:"";position:absolute;left:-6px;top:4px;width:10px;height:10px;border-radius:50%;background:#c34812}
+.af-project-timeline strong{color:#29343a;font-size:.85rem}
+.af-project-timeline p{margin:5px 0;color:#59656b;font-size:.82rem;line-height:1.5}
+.af-project-private-note,.af-project-footnote{color:#778188;font-size:.72rem;line-height:1.6}
+.af-project-messages{display:grid;gap:10px;margin:16px 0}
+.af-project-messages article{max-width:88%;padding:12px 14px;border:1px solid #e1e5e6;border-radius:9px;background:#f7f8f8}
+.af-project-messages article.workshop{justify-self:start;border-left:3px solid #c34812}
+.af-project-messages article.customer{justify-self:end;background:#fff7f2}
+.af-project-messages strong{font-size:.75rem;color:#29343a}
+.af-project-messages p{margin:6px 0;color:#48545a;font-size:.85rem;line-height:1.55;white-space:pre-wrap}
+.af-project-message-label{display:grid;gap:7px;margin:15px 0;color:#3d484e;font-size:.78rem;font-weight:800}
+.af-project-message-label textarea{width:100%;padding:12px;border:1px solid #cbd1d3;border-radius:8px;background:#fff;color:#20252a;resize:vertical}
+.af-project-footnote{margin-top:20px}
+.af-workshop-list-heading{display:flex;justify-content:space-between;align-items:center;gap:12px}
+@media(max-width:800px){.af-workshop-grid{grid-template-columns:1fr}.af-workshop-list{max-height:360px}}
+@media(max-width:600px){
+ .af-workshop-wrap,.af-project-wrap{padding:28px 15px 55px}
+ .af-workshop-heading{align-items:start}
+ .af-workshop-count{min-width:92px;padding:13px 10px}
+ .af-workshop-count strong{font-size:1.7rem}
+ .af-workshop-list>button{align-items:start;flex-direction:column}
+ .af-workshop-list>button>b{text-align:left}
+ .af-project-stages{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .af-project-status{align-items:start;flex-direction:column;gap:7px}
+ .af-workshop-share{align-items:stretch;flex-direction:column}
+ .af-workshop-share>*{width:100%;justify-content:center}
+}
