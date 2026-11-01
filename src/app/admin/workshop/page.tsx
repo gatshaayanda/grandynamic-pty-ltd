@@ -4,7 +4,6 @@ import { useCallback, useEffect, useState } from "react";
 import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut, type User } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db, hasFirebaseWebConfig } from "@/lib/firebase/client";
-import AdminGate from "@/app/admin/admin-gate";
 
 type Job = { id: string; shareId: string; customerName: string; phone: string; project: string; description: string; source: string; status: string; waitEstimate: string; customerUpdate: string; internalNotes: string; createdAt: string; updatedAt: string };
 const STATUSES = ["Queued", "Accepted", "In progress", "Awaiting customer", "Ready for collection", "Completed", "Cancelled"];
