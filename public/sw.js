@@ -63,7 +63,7 @@ try {
 }
 
 const CACHE_NAME = "grandynamic-shell-v3";
-const APP_SHELL = ["/", "/services", "/enquiry", "/basket", "/account", "/offline", "/grandynamic-pwa-icon-v3.svg?v=3", "/grandynamic-pwa-icon-v3.svg?v=3"];
+const APP_SHELL = ["/", "/services", "/enquiry", "/basket", "/account", "/offline", "/grandynamic-pwa-icon-v3.svg?v=3"];
 const PUBLIC_MEDIA = ["/grandynamic-media/redgate.jpg", "/grandynamic-media/fancygate.jpg", "/grandynamic-media/intro.mp4", "/grandynamic-media/spraying.mp4"];
 
 self.addEventListener("install", event => {
