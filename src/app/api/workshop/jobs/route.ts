@@ -49,7 +49,7 @@ export async function POST(request: Request) {
     const now = new Date().toISOString();
     const id = randomUUID();
     const shareId = randomBytes(20).toString("hex");
-    const job = { id, shareId, customerName, phone, project, description, source, status: "Queued", waitEstimate: "", customerUpdate: "Your project has been added to the workshop queue.", internalNotes: "", createdAt: now, updatedAt: now, createdBy: user.uid };
+    const job = { id, shareId, customerName, phone, project, description, source, status: "Queued", waitEstimate: "", customerUpdate: "Your project has been added to the workshop queue.", internalNotes: "", progressMedia: [], createdAt: now, updatedAt: now, createdBy: user.uid };
     const batch = db.batch();
     batch.create(db.doc("workshopJobs/" + id), job);
     batch.create(db.doc("publicProjects/" + shareId), { project, description, status: job.status, customerUpdate: job.customerUpdate, createdAt: now, updatedAt: now, timeline: [{ status: job.status, update: job.customerUpdate, createdAt: now }] });
@@ -72,10 +72,11 @@ export async function PATCH(request: Request) {
     const customerUpdate = clean(body?.customerUpdate, 1000);
     const internalNotes = clean(body?.internalNotes, 3000);
     const waitEstimate = clean(body?.waitEstimate, 80);
+    const progressMedia = Array.isArray(body?.progressMedia) ? body.progressMedia.slice(-12).filter((item: any) => typeof item?.url === "string" && item.url.startsWith("https://") && item.url.length <= 2048).map((item: any) => ({ url: item.url, caption: clean(item.caption, 180), createdAt: clean(item.createdAt, 40) })) : (Array.isArray(current.progressMedia) ? current.progressMedia : []);
     if (!STATUSES.includes(status as typeof STATUSES[number])) return NextResponse.json({ error: "Choose a valid job status." }, { status: 422 });
     const now = new Date().toISOString();
     const update = customerUpdate || (status !== current.status ? "Your project status has been updated by the workshop." : String(current.customerUpdate || ""));
-    const next = { status, customerUpdate: update, internalNotes, waitEstimate, updatedAt: now };
+    const next = { status, customerUpdate: update, internalNotes, waitEstimate, progressMedia, updatedAt: now };
     const batch = db.batch();
     batch.update(ref, next);
     const publicRef = db.doc("publicProjects/" + String(current.shareId));
@@ -83,7 +84,7 @@ export async function PATCH(request: Request) {
     if (publicSnap.exists) {
       const timeline = Array.isArray(publicSnap.data()?.timeline) ? publicSnap.data()!.timeline : [];
       const changed = status !== current.status || update !== current.customerUpdate;
-      batch.set(publicRef, { project: current.project, description: current.description, status, customerUpdate: update, waitEstimate, updatedAt: now, ...(changed ? { timeline: [...timeline, { status, update, createdAt: now }].slice(-30) } : {}) }, { merge: true });
+      batch.set(publicRef, { project: current.project, description: current.description, status, customerUpdate: update, waitEstimate, progressMedia, updatedAt: now, ...(changed ? { timeline: [...timeline, { status, update, createdAt: now }].slice(-30) } : {}) }, { merge: true });
     }
     await batch.commit();
     return NextResponse.json({ job: { ...current, ...next } }, { headers: { "Cache-Control": "no-store" } });
