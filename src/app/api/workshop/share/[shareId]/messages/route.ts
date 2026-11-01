@@ -20,7 +20,7 @@ export async function GET(_request: Request, context: { params: Promise<{ shareI
 export async function POST(request: Request, context: { params: Promise<{ shareId: string }> }) {
   try {
     const { shareId } = await context.params;
-    const { db, ref } = await projectRef(shareId);
+    const { ref } = await projectRef(shareId);
     const body = await request.json();
     const message = typeof body?.message === "string" ? body.message.trim().slice(0, 1000) : "";
     if (!message) return NextResponse.json({ error: "Write a message before sending." }, { status: 422 });
