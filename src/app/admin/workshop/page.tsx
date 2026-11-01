@@ -69,7 +69,7 @@ function WorkshopBoard() {
     setBusy(true); setNotice("");
     try {
       const data = await request("/api/workshop/jobs", { method: "POST", body: JSON.stringify(draft) });
-      setJobs(items => [data.job, ...items]); setSelected(data.job);
+      setJobs(items => [...items, data.job]); setSelected(data.job);
       setDraft({ customerName: "", phone: "", project: "", description: "", source: "Walk-in" });
       setNotice("Workshop job saved. The private customer progress link is ready to share.");
     } catch (e) { setNotice(e instanceof Error ? e.message : "Workshop job could not be saved."); }
