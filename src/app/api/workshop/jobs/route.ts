@@ -82,7 +82,7 @@ export async function PATCH(request: Request) {
     if (publicSnap.exists) {
       const timeline = Array.isArray(publicSnap.data()?.timeline) ? publicSnap.data()!.timeline : [];
       const changed = status !== current.status || update !== current.customerUpdate;
-      batch.set(publicRef, { project: current.project, description: current.description, status, customerUpdate: update, updatedAt: now, ...(changed ? { timeline: [...timeline, { status, update, createdAt: now }].slice(-30) } : {}) }, { merge: true });
+      batch.set(publicRef, { project: current.project, description: current.description, status, customerUpdate: update, waitEstimate, updatedAt: now, ...(changed ? { timeline: [...timeline, { status, update, createdAt: now }].slice(-30) } : {}) }, { merge: true });
     }
     await batch.commit();
     return NextResponse.json({ job: { ...current, ...next } }, { headers: { "Cache-Control": "no-store" } });
