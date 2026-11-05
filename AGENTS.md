@@ -94,3 +94,25 @@ Use Grandynamic naming and its own approved project configuration in app-facing 
 - Public project endpoints: `GET /api/workshop/share/{shareId}` and `GET/POST /api/workshop/share/{shareId}/messages`. Staff endpoints: `GET/POST/PATCH /api/workshop/jobs` and `GET/POST /api/workshop/messages`. Do not add public Firestore read/write rules as a shortcut; these routes use the server Admin SDK.
 
 - Workshop progress images are uploaded through the existing Grandynamic UploadThing `fileUploader` route (maximum 4 MB per image, up to 12 retained per project). Only the image URL, caption and timestamp are copied into the public-safe project snapshot; keep internal notes and phone details private. Do not introduce Firebase Storage or new storage rules for this feature.
+
+## Visible work, loading and operational transparency
+
+- Every meaningful asynchronous action must show its actual state: idle, working, success or failure. Use action-specific busy states so unrelated controls remain usable; prevent duplicate submissions while a write is in flight.
+- Prefer compact skeletons or stable placeholders for delayed content. Distinguish loading, empty, stale/offline and error states; never present an empty list as proof that no records exist until its query has completed.
+- For enquiry submission, show truthful stages for secure session creation, attachment upload and Firestore save. Display upload progress only from UploadThing callbacks and submission success only after Firestore confirms the write. On timeout or failure, preserve entered details and the stable pending enquiry ID so a retry does not silently create duplicates. Do not claim offline submission or background sync unless a durable, tested queue exists.
+- For messaging, show send progress and persisted success/failure, retain drafts on failure, and derive unread indicators from actual message records/last-read markers. Push is supplementary and must not change a successful Firestore result into a failure.
+- For media uploads, show per-operation progress, accepted file types/size limits, completion and actionable errors. Never show a published asset until its upload and save both succeed.
+- Admin actions must have independent busy states, clear confirmation for destructive changes, and success feedback only after the server/Firestore confirms persistence. Keep authorization errors distinct from network and validation errors.
+- Public work feeds and service catalogues need loading, empty, recoverable error and retry states. Public analytics must be aggregated and privacy-safe; never expose customer identity, private project details or contact information.
+- Maintain consistent Grandynamic branding and concise, mobile-first feedback. Avoid blocking the whole application for a local action; keep section boundaries and enough spacing to scan operational information.
+- Do not add decorative progress percentages, invented ETAs, optimistic success, fake unread counts or claims of synchronization that the underlying persistence does not support.
+
+## Offline PWA operating contract
+
+- The installed PWA must open its cached public shell while offline and provide a clear offline fallback. Public pages/assets may be cached for read-only access; cached content can be stale and must never be represented as live.
+- Never cache authenticated /account or /admin screens, private /project/{shareId} pages, or API responses in the service-worker cache. These require a live connection and fresh authorization. On service-worker cache-policy changes, increment the cache namespace so obsolete private entries are purged.
+- Enquiry submission, messaging, authentication, notifications and UploadThing uploads require connectivity in the current implementation. Preserve form details on the open page when a request fails, but do not say a request is queued or synced unless a durable IndexedDB queue, retry protocol, idempotency and user-visible reconciliation have been implemented and tested.
+- Do not cache private customer data to make offline screens appear functional. Do not loosen Firebase rules or authorization to support offline access.
+- Preserve the native install prompt lifecycle, dismissible install card, embedded-browser handling, iOS guidance and responsive presentation. Ordinary offline improvements must not redesign installation UX.
+- QA must include: install/open once online; load home, services, basket and enquiry; close/reopen in airplane mode; confirm public cached pages and offline fallback work; confirm account/admin/private project routes do not reveal cached private content; reconnect and verify normal network access. Separately test enquiry/message failure and retry without claiming a submission was saved offline.
+
