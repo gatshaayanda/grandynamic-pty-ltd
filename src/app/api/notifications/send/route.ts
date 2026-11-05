@@ -64,6 +64,8 @@ export async function POST(request: Request) {
       const validUsers = allowedUsers.filter((item): item is NonNullable<typeof item> => Boolean(item));
       const roleDocs = await Promise.all(validUsers.map(item => db.collection("admins").doc(item.uid).get()));
       recipientUids = roleDocs.filter((item, index) => item.exists && ["owner", "staff"].includes(String(item.data()?.role || "").toLowerCase()) && ALLOWED_ADMIN_EMAILS.has(String(validUsers[index].email || "").toLowerCase())).map(item => item.id);
+      const accessWordAdmin = await db.collection("admins").doc("grandynamic-one-word-admin").get();
+      if (accessWordAdmin.exists && ["owner", "staff"].includes(String(accessWordAdmin.data()?.role || "").toLowerCase())) recipientUids.push("grandynamic-one-word-admin");
     }
     if (!recipientUids.length) return NextResponse.json({ sent: false, reason: "no-recipients" });
 
