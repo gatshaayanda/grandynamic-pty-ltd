@@ -24,11 +24,18 @@ export async function POST(request: Request) {
     const app = getAdminApp();
     const decoded = await getAuth(app).verifyIdToken(match[1]);
     const email = String(decoded.email || "").trim().toLowerCase();
+    const db = getFirestore(app);
+    const adminRef = db.collection("admins").doc(decoded.uid);
+    if (decoded.uid === "grandynamic-one-word-admin") {
+      const role = await adminRef.get();
+      if (!role.exists || !["owner", "staff"].includes(String(role.data()?.role || "").toLowerCase())) {
+        return NextResponse.json({ error: "This access account is not authorized for Grandynamic workshop operations." }, { status: 403 });
+      }
+      return NextResponse.json({ ok: true }, { headers: { "Cache-Control": "no-store" } });
+    }
     if (!ALLOWED_ADMIN_EMAILS.has(email) || decoded.firebase?.sign_in_provider === "anonymous") {
       return NextResponse.json({ error: "This account is not authorized for Grandynamic workshop operations." }, { status: 403 });
     }
-    const db = getFirestore(app);
-    const adminRef = db.collection("admins").doc(decoded.uid);
     await db.runTransaction(async transaction => {
       const existing = await transaction.get(adminRef);
       const role = String(existing.data()?.role || "").toLowerCase();
