@@ -8,7 +8,7 @@ service cloud.firestore {
 
     function isAdmin() {
       return signedIn()
-        && request.auth.token.email == 'gatshaayanda@gmail.com'
+        && (request.auth.uid == 'grandynamic-one-word-admin' || request.auth.token.email == 'gatshaayanda@gmail.com')
         && exists(/databases/$(database)/documents/admins/$(request.auth.uid))
         && get(/databases/$(database)/documents/admins/$(request.auth.uid)).data.role in ['owner', 'staff'];
     }
