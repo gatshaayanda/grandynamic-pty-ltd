@@ -63,7 +63,7 @@ try {
 }
 
 const CACHE_NAME = "grandynamic-shell-v3";
-const APP_SHELL = ["/", "/services", "/enquiry", "/basket", "/account", "/offline", "/grandynamic-pwa-icon-v3.svg?v=3"];
+const APP_SHELL = ["/", "/services", "/enquiry", "/basket", "/offline", "/grandynamic-pwa-icon-v3.svg?v=3"];
 const PUBLIC_MEDIA = ["/grandynamic-media/redgate.jpg", "/grandynamic-media/fancygate.jpg", "/grandynamic-media/intro.mp4", "/grandynamic-media/spraying.mp4"];
 
 self.addEventListener("install", event => {
@@ -108,8 +108,17 @@ self.addEventListener("fetch", event => {
   }
 
   if (request.mode === "navigate") {
+    // Never persist account, admin or private share-link HTML on a shared device.
+    // These screens require a live connection and fresh authorization.
+    const privateRoute = url.pathname === "/account" || url.pathname.startsWith("/account/")
+      || url.pathname === "/admin" || url.pathname.startsWith("/admin/")
+      || url.pathname.startsWith("/project/");
+    if (privateRoute) {
+      event.respondWith(fetch(request));
+      return;
+    }
     event.respondWith(fetch(request).then(response => {
-      if (response.ok) void caches.open(CACHE_NAME).then(cache => cache.put(request, response.clone()));
+      if (response.ok && response.type === "basic") void caches.open(CACHE_NAME).then(cache => cache.put(request, response.clone()));
       return response;
     }).catch(() => caches.match(request).then(cached => cached || caches.match(url.pathname) || caches.match("/offline"))));
     return;
