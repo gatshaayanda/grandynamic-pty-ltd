@@ -62,7 +62,7 @@ try {
   console.warn("Grandynamic background notifications could not initialize.", error);
 }
 
-const CACHE_NAME = "grandynamic-shell-v3";
+const CACHE_NAME = "grandynamic-shell-v4";
 const APP_SHELL = ["/", "/services", "/enquiry", "/basket", "/offline", "/grandynamic-pwa-icon-v3.svg?v=3"];
 const PUBLIC_MEDIA = ["/grandynamic-media/redgate.jpg", "/grandynamic-media/fancygate.jpg", "/grandynamic-media/intro.mp4", "/grandynamic-media/spraying.mp4"];
 
