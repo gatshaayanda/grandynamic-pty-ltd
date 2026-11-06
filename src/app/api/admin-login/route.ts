@@ -36,7 +36,11 @@ export async function POST(request: Request) {
     const token = await auth.createCustomToken(ACCESS_UID);
     return NextResponse.json({ token }, { headers: { "Cache-Control": "no-store" } });
   } catch (error) {
-    console.error("Grandynamic one-word admin sign-in failed:", error);
-    return NextResponse.json({ error: "Admin sign-in is temporarily unavailable. Check the server configuration." }, { status: 503, headers: { "Cache-Control": "no-store" } });
+    const detail = error instanceof Error ? error.message : "";
+    console.error("Grandynamic one-word admin sign-in failed:", detail || "Unknown server error");
+    const message = /FIREBASE_ADMIN_KEY/.test(detail)
+      ? "One-word access is connected, but the server-only Firebase Admin credential is missing or invalid. Configure FIREBASE_ADMIN_KEY."
+      : "Admin sign-in is temporarily unavailable. Check the server configuration.";
+    return NextResponse.json({ error: message }, { status: 503, headers: { "Cache-Control": "no-store" } });
   }
 }
