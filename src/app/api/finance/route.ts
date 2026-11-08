@@ -66,6 +66,9 @@ function businessSnapshot(settings: any) {
     vatRegistered: settings?.vatRegistered === true && Boolean(clean(settings?.vatNumber, 80)),
     vatNumber: clean(settings?.vatNumber, 80),
     vatRate: Number(settings?.vatRate) || 0,
+    quotePrefix: clean(settings?.quotePrefix, 12) || "GD-QT",
+    invoicePrefix: clean(settings?.invoicePrefix, 12) || "GD-INV",
+    receiptPrefix: clean(settings?.receiptPrefix, 12) || "GD-RC",
   };
 }
 
@@ -143,6 +146,7 @@ export async function POST(request: Request) {
       const ref = db.doc("quotes/" + id);
       const snap = await ref.get();
       if (!snap.exists) throw new Error("Quote not found.");
+      if (snap.data()?.invoiceId) throw new Error("An invoiced quotation cannot be changed.");
       await ref.update({ status, updatedAt: now, updatedBy: user.uid });
       return NextResponse.json({ id, status });
     }
@@ -204,7 +208,7 @@ export async function POST(request: Request) {
         const newPaid = Math.round((Number(invoice.amountPaid || 0) + paid) * 100) / 100;
         const newBalance = Math.max(0, Math.round((Number(invoice.total || 0) - newPaid) * 100) / 100);
         const status = newBalance <= 0.01 ? "Paid" : "Partially paid";
-        const payment = { invoiceId, invoiceNumber: invoice.invoiceNumber, customerName: invoice.customerName, amount: paid, method, reference, receivedAt, createdAt: now, createdBy: user.uid, receiptId: receiptRef.id, receiptNumber };
+        const payment = { invoiceId, invoiceNumber: invoice.invoiceNumber, customerName: invoice.customerName, phone: invoice.phone || "", email: invoice.email || "", amount: paid, method, reference, receivedAt, createdAt: now, createdBy: user.uid, receiptId: receiptRef.id, receiptNumber };
         tx.set(counter, { value: next, updatedAt: now });
         tx.create(paymentRef, payment);
         tx.create(receiptRef, { ...payment, id: receiptRef.id, business: invoice.business, project: invoice.project, receiptNumber });
