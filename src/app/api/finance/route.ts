@@ -58,7 +58,7 @@ async function rows(db: Firestore, name: string) {
 }
 function businessSnapshot(settings: any) {
   return {
-    businessName: clean(settings?.businessName, 120) || "Grandynamic Pty Ltd",
+    businessName: clean(settings?.businessName, 120),
     address: clean(settings?.address, 300),
     phone: clean(settings?.phone, 60),
     email: clean(settings?.email, 160),
@@ -100,7 +100,7 @@ export async function POST(request: Request) {
       const vatRegistered = body.vatRegistered === true;
       const vatNumber = clean(body.vatNumber, 80);
       const vatRate = amount(body.vatRate || 0);
-      if (!businessName) throw new Error("Enter the legal or trading name to show on documents.");
+      if (!businessName || !clean(body.address, 300) || !clean(body.phone, 60)) throw new Error("Enter the legal or trading name, business address and contact phone before saving document settings.");
       if (vatRegistered && (!vatNumber || !Number.isFinite(vatRate) || vatRate <= 0 || vatRate > 100)) throw new Error("A VAT-registered business needs its VAT number and a valid VAT rate.");
       const data = {
         businessName, address: clean(body.address, 300), phone: clean(body.phone, 60),
@@ -131,7 +131,9 @@ export async function POST(request: Request) {
       if (!customerName || !phone || !project) throw new Error("Enter the customer name, phone number and project title.");
       const lines = validLines(body.lines);
       const settingsSnap = await db.doc("financeSettings/business").get();
-      const settings = businessSnapshot(settingsSnap.data() || {});
+      const rawSettings = settingsSnap.data() || {};
+      if (!settingsSnap.exists || !clean(rawSettings.businessName, 120) || !clean(rawSettings.address, 300) || !clean(rawSettings.phone, 60)) throw new Error("Complete and save the business name, address and phone in Finance → Settings before creating customer quotations.");
+      const settings = businessSnapshot(rawSettings);
       const calc = totals(lines, settings);
       const ref = db.collection("quotes").doc();
       const counter = db.doc("financeCounters/quotes");
