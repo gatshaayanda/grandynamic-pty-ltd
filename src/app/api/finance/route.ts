@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { notificationServices } from "@/lib/server/firebase-admin";
+import type { Firestore } from "firebase-admin/firestore";
 
 export const runtime = "nodejs";
 
@@ -51,7 +52,7 @@ function failure(error: unknown) {
   const status = message === "SIGN_IN_REQUIRED" ? 401 : message === "ACCESS_DENIED" ? 403 : 400;
   return NextResponse.json({ error: status === 401 ? "Sign in to Grandynamic Operations again." : status === 403 ? "Your account is not authorized for finance records." : message }, { status, headers: { "Cache-Control": "no-store" } });
 }
-async function rows(db: FirebaseFirestore.Firestore, name: string) {
+async function rows(db: Firestore, name: string) {
   const snap = await db.collection(name).get();
   return snap.docs.map(item => ({ id: item.id, ...item.data() })).sort((a: any, b: any) => String(b.createdAt || b.issuedAt || "").localeCompare(String(a.createdAt || a.issuedAt || "")));
 }
