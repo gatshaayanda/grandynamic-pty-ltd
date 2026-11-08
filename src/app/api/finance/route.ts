@@ -75,15 +75,16 @@ function businessSnapshot(settings: any) {
 export async function GET(request: Request) {
   try {
     const { db } = await requireStaff(request);
-    const [settings, quotes, invoices, payments, receipts, expenses] = await Promise.all([
+    const [settings, quotes, invoices, payments, receipts, expenses, enquiries] = await Promise.all([
       db.doc("financeSettings/business").get(),
       rows(db, "quotes"),
       rows(db, "invoices"),
       rows(db, "payments"),
       rows(db, "receipts"),
       rows(db, "expenses"),
+      rows(db, "enquiries"),
     ]);
-    return NextResponse.json({ settings: settings.exists ? settings.data() : {}, quotes, invoices, payments, receipts, expenses }, { headers: { "Cache-Control": "no-store" } });
+    return NextResponse.json({ settings: settings.exists ? settings.data() : {}, quotes, invoices, payments, receipts, expenses, enquiries: enquiries.map((x: any) => ({ id: x.id, customerId: x.customerId || "", name: x.name || "", phone: x.phone || "", email: x.email || "", intendedUse: x.intendedUse || "", location: x.location || "", services: Array.isArray(x.services) ? x.services : [] })) }, { headers: { "Cache-Control": "no-store" } });
   } catch (error) { return failure(error); }
 }
 
@@ -115,10 +116,17 @@ export async function POST(request: Request) {
     }
 
     if (action === "create-quote") {
-      const customerName = clean(body.customerName, 120);
-      const phone = clean(body.phone, 60);
-      const email = clean(body.email, 160);
-      const project = clean(body.project, 180);
+      const enquiryId = clean(body.enquiryId, 100);
+      let sourceEnquiry: any = null;
+      if (enquiryId) {
+        const sourceSnap = await db.doc("enquiries/" + enquiryId).get();
+        if (!sourceSnap.exists) throw new Error("The selected customer enquiry could not be found.");
+        sourceEnquiry = sourceSnap.data();
+      }
+      const customerName = clean(sourceEnquiry?.name || body.customerName, 120);
+      const phone = clean(sourceEnquiry?.phone || body.phone, 60);
+      const email = clean(sourceEnquiry?.email || body.email, 160);
+      const project = clean(sourceEnquiry?.intendedUse || body.project, 180);
       const notes = clean(body.notes, 2000);
       if (!customerName || !phone || !project) throw new Error("Enter the customer name, phone number and project title.");
       const lines = validLines(body.lines);
@@ -133,7 +141,7 @@ export async function POST(request: Request) {
         const prefix = clean(settingsSnap.data()?.quotePrefix, 12) || "GD-QT";
         const number = prefix + "-" + String(next).padStart(5, "0");
         tx.set(counter, { value: next, updatedAt: now });
-        tx.create(ref, { quoteNumber: number, customerName, phone, email, project, notes, lines, ...calc, business: settings, status: "Draft", createdAt: now, updatedAt: now, createdBy: user.uid });
+        tx.create(ref, { quoteNumber: number, enquiryId, customerId: clean(sourceEnquiry?.customerId, 128), customerName, phone, email, project, notes, lines, ...calc, business: settings, status: "Draft", createdAt: now, updatedAt: now, createdBy: user.uid });
         return number;
       });
       return NextResponse.json({ id: ref.id, quoteNumber }, { status: 201 });
@@ -169,7 +177,7 @@ export async function POST(request: Request) {
         const number = (clean(settings.invoicePrefix, 12) || "GD-INV") + "-" + String(next).padStart(5, "0");
         const invoice = {
           invoiceNumber: number, quoteId, quoteNumber: quote.quoteNumber,
-          customerName: quote.customerName, phone: quote.phone, email: quote.email,
+          customerName: quote.customerName, customerId: quote.customerId || "", enquiryId: quote.enquiryId || "", phone: quote.phone, email: quote.email,
           project: quote.project, notes: quote.notes, lines: quote.lines,
           subtotal: quote.subtotal, vatRegistered: quote.vatRegistered,
           vatRate: quote.vatRate, vatAmount: quote.vatAmount, total: quote.total,
@@ -201,13 +209,13 @@ export async function POST(request: Request) {
         if (!invoiceSnap.exists) throw new Error("Invoice not found.");
         const invoice = invoiceSnap.data()!;
         const balance = Math.max(0, Math.round((Number(invoice.total || 0) - Number(invoice.amountPaid || 0)) * 100) / 100);
-        if (paid > balance + 0.01) throw new Error("Payment exceeds the outstanding invoice balance.");
+        if (paid > balance + 0.001) throw new Error("Payment exceeds the outstanding invoice balance.");
         const next = Number(counterSnap.data()?.value || 0) + 1;
         const prefix = clean(invoice.business?.receiptPrefix, 12) || "GD-RC";
         const receiptNumber = prefix + "-" + String(next).padStart(5, "0");
         const newPaid = Math.round((Number(invoice.amountPaid || 0) + paid) * 100) / 100;
         const newBalance = Math.max(0, Math.round((Number(invoice.total || 0) - newPaid) * 100) / 100);
-        const status = newBalance <= 0.01 ? "Paid" : "Partially paid";
+        const status = newBalance <= 0.001 ? "Paid" : "Partially paid";
         const payment = { invoiceId, invoiceNumber: invoice.invoiceNumber, customerName: invoice.customerName, phone: invoice.phone || "", email: invoice.email || "", amount: paid, method, reference, receivedAt, createdAt: now, createdBy: user.uid, receiptId: receiptRef.id, receiptNumber };
         tx.set(counter, { value: next, updatedAt: now });
         tx.create(paymentRef, payment);
