@@ -118,3 +118,16 @@ Use Grandynamic naming and its own approved project configuration in app-facing 
 - Preserve the native install prompt lifecycle, dismissible install card, embedded-browser handling, iOS guidance and responsive presentation. Ordinary offline improvements must not redesign installation UX.
 - QA must include: install/open once online; load home, services, basket and enquiry; close/reopen in airplane mode; confirm public cached pages and offline fallback work; confirm account/admin/private project routes do not reveal cached private content; reconnect and verify normal network access. Separately test enquiry/message failure and retry without claiming a submission was saved offline.
 
+
+
+## Finance, quotations and business records
+- The private /admin/finance workspace is part of Grandynamic Operations. Keep it behind the existing Firebase ID-token verification, approved owner/staff role and server-only Firebase Admin SDK. Never expose finance collections to public Firestore client reads or writes.
+- Finance records are stored in quotes, invoices, payments, receipts, expenses, financeSettings, and financeCounters; all reads/writes must go through /api/finance with verified staff authorization. Preserve the default-deny Firestore rules.
+- A quote is a proposal, not revenue. Only issue an invoice after the owner marks the quote Accepted. Issued invoices must not be silently edited or deleted. Payment records are append-only and must create a uniquely numbered receipt and update the invoice balance atomically.
+- Count money as collected only after a payment record is persisted. Count expenses only after an expense record is persisted. Never infer cash received from enquiries, quote values, job status, or customer promises.
+- Keep sequential document numbers transaction-safe. Store customer, line-item, tax and business identity snapshots on issued documents so later catalogue/profile edits do not rewrite historical documents.
+- The owner must configure the legal/trading name, address, contact details, TIN and (only if applicable) VAT registration number/rate before issuing customer-facing documents. Do not invent VAT registration, tax rates, TINs, legal particulars or claim that a generated ordinary invoice is a statutory tax invoice. Confirm current BURS requirements with the business accountant/BURS.
+- Print/Save PDF actions produce a print-ready document from the saved record. The underlying invoice/receipt data remains in Firestore; do not claim the generated PDF has been centrally archived unless an actual PDF file upload/archive step is completed.
+- Expense supporting files use the existing UploadThing fileUploader route. Do not add Firebase Storage or loosen security rules. Retain supplier receipts, invoices, deposit slips and bank statements; CSV exports are working registers for accountant/BURS preparation, not tax-return submissions.
+- Financial dashboards must distinguish quote pipeline, issued invoice value, recorded collections, expenses and outstanding balances. They are operational records, not audited financial statements or bank balances.
+- Preserve existing service/price CRUD, announcements, published-work management, workshop queue, enquiry/customer messaging, FCM notification registration/delivery, PWA installation and service-worker behaviour while extending Operations.
