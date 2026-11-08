@@ -62,3 +62,5 @@ Never commit `.env.local`, service-account credentials or other private secrets.
 - Configure a dedicated Grandynamic Firebase project and review Authentication, Firestore rules, server credentials, UploadThing, notification settings and the business owner's admin allowlist before production use. The current allowlist only includes `gatshaayanda@gmail.com`; confirm the actual business owner before production. Do not reuse Africhiko production credentials or data.
 - Confirm the business's approved admin Google account(s), phone/email, workshop address and final brand assets before publishing those details.
 - UploadThing is included in the codebase, but verify its route and environment configuration before claiming uploads are production-ready.
+
+<!-- deployment retry checkpoint: 2026-11-08 -->
