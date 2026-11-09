@@ -641,3 +641,7 @@
 .gd-finance .af-form-footnote{line-height:1.6}
 @media(max-width:850px){.gd-finance-metrics,.gd-finance-summary{grid-template-columns:repeat(2,minmax(0,1fr))}.gd-finance-grid{grid-template-columns:1fr}.gd-finance-line{grid-template-columns:1fr 1fr}.gd-finance-line strong{grid-column:1/-1}.gd-finance-actions input,.gd-finance-actions select{max-width:none;flex:1 1 130px}}
 @media(max-width:560px){.gd-finance{padding:22px 14px 60px}.gd-finance-metrics,.gd-finance-summary,.gd-finance-export{grid-template-columns:1fr 1fr}.gd-finance-record{align-items:flex-start;flex-direction:column}.gd-finance-tabs{gap:6px}.gd-finance-tabs button{padding:9px 10px;font-size:13px}.gd-finance-line{grid-template-columns:1fr 1fr}}
+
+/* Admin customer handoff */
+.af-admin-share-panel{grid-column:1/-1}.af-admin-share-panel>p:not(.af-eyebrow){max-width:850px;color:var(--muted);font-size:.86rem;line-height:1.6}.af-admin-share-panel .af-admin-list{margin-top:18px}.af-admin-share-panel .af-admin-service{grid-template-columns:minmax(0,1fr) auto auto}.af-admin-share-panel .af-admin-service .af-button{white-space:nowrap}
+@media(max-width:560px){.af-admin-share-panel{padding:17px}.af-admin-share-panel .af-admin-service{grid-template-columns:minmax(0,1fr) auto;gap:8px}.af-admin-share-panel .af-admin-service .af-button{grid-column:1/-1;justify-self:start}.af-admin-share-panel .af-admin-service>button{grid-column:2;grid-row:1}}
