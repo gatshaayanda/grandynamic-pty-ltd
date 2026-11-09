@@ -131,3 +131,10 @@ Use Grandynamic naming and its own approved project configuration in app-facing 
 - Expense supporting files use the existing UploadThing fileUploader route. Do not add Firebase Storage or loosen security rules. Retain supplier receipts, invoices, deposit slips and bank statements; CSV exports are working registers for accountant/BURS preparation, not tax-return submissions.
 - Financial dashboards must distinguish quote pipeline, issued invoice value, recorded collections, expenses and outstanding balances. They are operational records, not audited financial statements or bank balances.
 - Preserve existing service/price CRUD, announcements, published-work management, workshop queue, enquiry/customer messaging, FCM notification registration/delivery, PWA installation and service-worker behaviour while extending Operations.
+
+
+## Admin WhatsApp customer handoff
+- The Operations customer-handoff panel may prepare WhatsApp invitations for contacts entered by authorized staff. Contact entries are temporary page state only; do not persist them or expose them as a customer directory unless explicitly requested.
+- Invitations link to the public `/account` page and explain how customers can open the Grandynamic domain in Google Chrome, sign in with Google, review their own enquiries and browse services/start another project request.
+- The invitation is not an account-impersonation or account-sharing mechanism. Customers must authenticate normally; existing Firestore ownership rules remain authoritative and customers may only read their own enquiries. Never expose customer enquiry records through a share token or WhatsApp URL.
+- A website link cannot silently force Chrome as the device's default browser. Tell customers to choose Chrome or paste the URL into Chrome; do not claim the link guarantees a browser choice.
