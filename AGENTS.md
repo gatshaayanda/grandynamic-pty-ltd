@@ -120,6 +120,14 @@ Use Grandynamic naming and its own approved project configuration in app-facing 
 
 
 
+
+## Public service catalogue and price guidance
+- The customer-facing /services catalogue uses compact, single-column service rows with a visible Botswana pula amount where a defensible starting price is available. Keep it mobile-first and scannable; do not revert to tall marketing cards.
+- Service prices are editable by authorized Operations staff through the existing SERVICE CATALOGUE CRUD. `priceType` is either `from` (display as FROM; indicative starting price only) or `fixed` (display as a listed fixed amount). A null price means quote on request. Preserve `unit` and `priceType` when editing or hiding services.
+- Starter research seeds: steel sliding/swing gates FROM BWP 6,000 (public Botswana fabricator Tshipiworks publishes gates from P6,000); single steel carport FROM BWP 8,500 (2026 Gaborone listing). These are market reference points, not Grandynamic-confirmed tariffs. Keep them explicitly labelled FROM and confirm actual scope, dimensions, materials, finish, motor, transport and installation before issuing a quotation. Do not invent prices for burglar bars, repairs, bespoke structures or other unpriced work.
+- The admin catalogue seed action creates missing starter records and fills only missing/null prices on existing starter records. It must preserve any manually entered price. Customers may add services to a quote request; a FROM price is not a final quotation, order total or amount due. Never calculate FROM prices as confirmed basket totals.
+- When changing this model, keep customer catalogue, basket and enquiry summaries consistent, and verify that price type and unit survive service edits and customer selection.
+
 ## Finance, quotations and business records
 - The private /admin/finance workspace is part of Grandynamic Operations. Keep it behind the existing Firebase ID-token verification, approved owner/staff role and server-only Firebase Admin SDK. Never expose finance collections to public Firestore client reads or writes.
 - Finance records are stored in quotes, invoices, payments, receipts, expenses, financeSettings, and financeCounters; all reads/writes must go through /api/finance with verified staff authorization. Preserve the default-deny Firestore rules.
