@@ -645,3 +645,49 @@
 /* Admin customer handoff */
 .af-admin-share-panel{grid-column:1/-1}.af-admin-share-panel>p:not(.af-eyebrow){max-width:850px;color:var(--muted);font-size:.86rem;line-height:1.6}.af-admin-share-panel .af-admin-list{margin-top:18px}.af-admin-share-panel .af-admin-service{grid-template-columns:minmax(0,1fr) auto auto}.af-admin-share-panel .af-admin-service .af-button{white-space:nowrap}
 @media(max-width:560px){.af-admin-share-panel{padding:17px}.af-admin-share-panel .af-admin-service{grid-template-columns:minmax(0,1fr) auto;gap:8px}.af-admin-share-panel .af-admin-service .af-button{grid-column:1/-1;justify-self:start}.af-admin-share-panel .af-admin-service>button{grid-column:2;grid-row:1}}
+
+
+/* Compact rideshare-style customer service catalogue and visible starting prices. */
+.gd-services-compact .af-page-intro{padding:54px 22px 18px;background:#f4f1ed}
+.gd-services-compact .af-page-intro h1{margin:0 0 9px;font-size:clamp(2.2rem,4.2vw,3.5rem);line-height:.98;letter-spacing:-.065em}
+.gd-services-compact .af-page-intro>p:last-child{max-width:680px;margin:0;color:#6b625c;font-size:12px;line-height:1.55}
+.gd-services-compact .af-services-section{width:min(1000px,100%);margin:0 auto;padding:18px 22px 58px}
+.gd-services-compact .af-search-row{margin-bottom:12px}
+.gd-services-compact .af-category-chips{gap:6px;margin-bottom:10px}
+.gd-services-compact .af-category-chips button{padding:8px 11px;font-size:11px}
+.gd-price-disclaimer{margin:0 0 12px;color:#756b64;font-size:10px;line-height:1.5}
+.gd-services-compact .af-service-grid{grid-template-columns:1fr;gap:8px}
+.gd-services-compact .gd-service-row{display:grid;grid-template-columns:104px minmax(0,1fr);min-height:116px;border:1px solid #ded7d1;border-radius:10px;box-shadow:0 2px 8px #211b1808}
+.gd-services-compact .gd-service-row:hover{transform:translateY(-1px);box-shadow:0 8px 20px #211b1810}
+.gd-services-compact .gd-service-row .af-service-art{min-height:100%;height:100%;padding:10px;display:flex;flex-direction:column;justify-content:space-between;gap:8px;background:linear-gradient(145deg,#28211d,#655044)}
+.gd-services-compact .gd-service-row .af-service-art:before{background:linear-gradient(0deg,#100d0db0,transparent 70%)}
+.gd-services-compact .gd-service-row .af-service-art>span{font-size:7px;line-height:1.35}
+.gd-services-compact .gd-service-row .af-service-art>small{align-self:flex-end;color:#f3bd91;font-size:10px}
+.gd-services-compact .gd-service-row .af-service-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.gd-services-compact .gd-service-row .af-service-copy{min-width:0;padding:11px 14px;display:flex;flex-direction:column;justify-content:center;gap:5px}
+.gd-services-compact .gd-service-row .af-card-meta{align-items:center;font-size:8px;letter-spacing:.07em}
+.gd-services-compact .gd-service-row .af-card-meta b{color:#a9471e;font-size:11px;white-space:nowrap}
+.gd-services-compact .gd-service-row .af-service-copy h3{margin:0;color:#211b18;font-size:15px;line-height:1.2;letter-spacing:-.035em}
+.gd-services-compact .gd-service-row .af-service-copy p{min-height:0;margin:0;color:#6c625b;font-size:10px;line-height:1.45}
+.gd-services-compact .gd-service-row .af-card-actions{align-items:center;justify-content:space-between;gap:8px;margin-top:3px}
+.gd-services-compact .gd-service-row .af-card-actions small{color:#81756d;font-size:9px}
+.gd-services-compact .gd-service-row .af-card-actions .af-button{min-height:31px;padding:7px 10px;font-size:9px;white-space:nowrap}
+.gd-services-compact .af-custom-band{margin-top:18px;padding:18px;border-radius:10px}
+@media(max-width:560px){
+ .gd-services-compact .af-page-intro{padding:48px 15px 15px}
+ .gd-services-compact .af-page-intro h1{font-size:2.35rem}
+ .gd-services-compact .af-services-section{padding:14px 12px 44px}
+ .gd-services-compact .af-search-row{grid-template-columns:1fr auto;gap:7px}
+ .gd-services-compact .af-search-row input{grid-column:1/-1;grid-row:2}
+ .gd-services-compact .gd-service-row{grid-template-columns:78px minmax(0,1fr);min-height:108px}
+ .gd-services-compact .gd-service-row .af-service-art{padding:7px}
+ .gd-services-compact .gd-service-row .af-service-art>span{font-size:6px}
+ .gd-services-compact .gd-service-row .af-service-copy{padding:9px 10px;gap:4px}
+ .gd-services-compact .gd-service-row .af-card-meta{font-size:7px}
+ .gd-services-compact .gd-service-row .af-card-meta b{font-size:10px}
+ .gd-services-compact .gd-service-row .af-service-copy h3{font-size:13px}
+ .gd-services-compact .gd-service-row .af-service-copy p{font-size:9px;line-height:1.35}
+ .gd-services-compact .gd-service-row .af-card-actions{margin-top:2px}
+ .gd-services-compact .gd-service-row .af-card-actions small{font-size:8px}
+ .gd-services-compact .gd-service-row .af-card-actions .af-button{min-height:29px;padding:6px 8px;font-size:8px}
+}
